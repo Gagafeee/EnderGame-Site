@@ -1,0 +1,137 @@
+header{
+    background-color: var(--background-color-second);
+    width: 100%;
+    height: 12vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+header .title {
+    text-align: center;
+    display: block;
+    height: fit-content;
+    width: 10%;
+    font-weight: 700;
+    font-size: 3vw;
+    cursor: pointer;
+    color: var(--text-color)
+}
+
+header .content {
+    height: 100%;
+    width: 80%;
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+}
+
+header .content .server-statue-widget {
+    height: 100%;
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-content: center;
+}
+header .content .server-statue-widget .title {
+    font-size: 2vh;
+    font-weight: 600;
+    width: 100%;
+    height: 30%;
+    margin: 0;
+    margin-top: 1vh;
+    cursor: default;
+}
+
+header .content .server-statue-widget .statue {
+    height: 70%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+header .content .server-statue-widget .statue #round {
+    background-color: var(--statue-getting);
+    width: 4vh;
+    height: 4vh;
+    border-radius: 50%
+}
+
+
+
+header .content .server-statue-widget .statue #round[class=online]{
+    background-color: var(--statue-online);
+}
+header .content .server-statue-widget .statue #round[class=offline]{
+    background-color: var(--statue-offline);
+}
+
+header .content .server-statue-widget .statue .text {
+
+    font-size: 4vh;
+    font-weight: 500;
+
+}
+header .content nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    width: 65%;
+}
+
+header .content nav .button {
+    display: block;
+    width: 12vw;
+    height: 60%;
+    background-color: var(--background-color-second);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px -2px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 32px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+header .content nav .button:hover {
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+header .content nav #selected-button{
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+header .content nav .button p {
+    font-weight: 700;
+    font-size: 1.5vw;
+}
+
+
+header .content #connect {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+header .content #connect .icon {
+    background-image: url(../ressources/img/icon/user.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 5vh;
+    width: 5vh;
+    cursor: pointer;
+
+}
+
+header .content #connect p {
+    font-weight: 700;
+    font-size: 1.5vw;
+    cursor: pointer;
+}

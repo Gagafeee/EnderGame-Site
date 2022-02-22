@@ -3,18 +3,31 @@
 .theme-dark {
     --background-color: #24282B;
     --background-color-second: #2E3438;
+    --background-color-third: #24282B;
 
     --valid: #6fd057;
     --unvalid: #BD3535;
     
     --text-color: #FFFFFF;
+
+    --statue-getting: #494949;
+    --statue-online: #6fd057;
+    --statue-offline: #BD3535;
 }
 
 body{
     background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
 }
-p{
+
+p,h1,h2,h3,h4,h5,h6, a{
     color: var(--text-color);
     font-family: 'Quicksand';
     font-weight: 400;
+}
+
+a {
+    color: var(--valid);
+    text-decoration: none;
 }
