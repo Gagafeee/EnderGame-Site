@@ -1,5 +1,5 @@
 var loaded = false;
-function GetServer(isOpen){loaded = true}
+function serverIsOn(){loaded = true}
 
 
 setTimeout(() => {
