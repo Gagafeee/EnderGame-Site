@@ -1,0 +1,9 @@
+{
+  "name": "EnderGameSiteNew",
+  "lockfileVersion": 2,
+  "requires": true,
+  "packages": {},
+  "dependencies": {
+    "firebase": "^9.6.7"
+  }
+}
