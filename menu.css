@@ -11,7 +11,7 @@ header .title {
     text-align: center;
     display: block;
     height: fit-content;
-    width: 10%;
+    width: fit-content;
     font-weight: 700;
     font-size: 3vw;
     cursor: pointer;

@@ -95,18 +95,58 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 ?>
  
+
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Sign Up</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <style>
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 360px; padding: 20px; }
-    </style>
-</head>
-<body>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>EnderGame Register</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="dephault.css" type="text/css">
+        <link rel="stylesheet" href="menu.css" type="text/css"></link>
+    </head>
+    <body class="theme-dark">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <header>
+      <iframe src="http://node02.myhoster.fr:25567" onload="serverIsOn()" style="display:none" id="servergeter"></iframe>
+      <a href="../index.html" class="title">EnderGame</a>
+      <div class="content">
+      <div class="server-statue-widget">
+        <p class="title">Server statue :</p>
+        <div class="statue">
+        <div id="round"></div>
+        <p class="text" id="server-statue-text">Loading...</p>
+        <script src="menu.js"></script>
+      </div>
+      </div>
+      <nav>
+        <a class="button" href="../index.html" id="selected-button">
+          <p>Accueil</p>
+        </a>
+        <a class="button" href="../blog.html">
+          <p>Blog</p>
+        </a>
+        <a class="button" href="">
+          <p>Button</p>
+        </a>
+        <a class="button" href="">
+          <p>Button</p>
+        </a>
+      </nav>
+      <a id="connect" href="register.php">
+        <div class="icon"></div>
+        <p>Se connecter</p>
+      </div>
+    </a>
+    </header>
     <div class="wrapper">
         <h2>Sign Up</h2>
         <p>Please fill this form to create an account.</p>
@@ -132,6 +172,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             </div>
             <p>Already have an account? <a href="login.php">Login here</a>.</p>
         </form>
-    </div>    
-</body>
+    </div>  
+    </body>
 </html>
