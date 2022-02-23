@@ -66,6 +66,9 @@ header .content .server-statue-widget .statue #round[class=online]{
 header .content .server-statue-widget .statue #round[class=offline]{
     background-color: var(--statue-offline);
 }
+header .content .server-statue-widget .statue #round[class=error]{
+    background-color: #e91717;
+}
 
 header .content .server-statue-widget .statue .text {
 
