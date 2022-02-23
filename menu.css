@@ -115,6 +115,7 @@ header .content nav .button p {
 
 
 header .content #connect {
+    display: block;
     width: 20%;
     height: 100%;
     display: flex;

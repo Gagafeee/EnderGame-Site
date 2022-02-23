@@ -40,7 +40,7 @@ setTimeout(() => {
     setTimeout(() => {
         UpdateStatue();
     }, 5000);
-    update();
+    //update();
 }, 10000);
 
 }
