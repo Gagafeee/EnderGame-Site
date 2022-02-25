@@ -1,0 +1,14 @@
+{
+    "recommendations": [
+        "sidthesloth.html5-boilerplate",
+        "ecmel.vscode-html-css",
+        "tht13.html-preview-vscode",
+        "abusaidm.html-snippets",
+        "lonefy.vscode-js-css-html-formatter",
+        "hdg.live-html-previewer",
+        "yandeu.five-server",
+        "xdebug.php-debug",
+        "bmewburn.vscode-intelephense-client",
+        "ikappas.phpcs"
+    ]
+}
