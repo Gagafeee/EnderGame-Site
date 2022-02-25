@@ -30,56 +30,42 @@
             <input class="input" type="text" name="email" placeholder="Votre Email" required><br>
             <input class="input" type="password" name="password" placeholder="Mots de passe" required>
             <input class="button" type="submit" name="formsend" id="formsend" value="Créer">
-        </form>
-        <section class="return-panel">
-            <p></p>
-        </section>
-        <?php
         
-        if(isset($_POST['formsend'])){
-            $pseudo = $_POST['pseudo'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $user_id = 0;
-            $permission_level = 0;
-            $tags = null;
+        
+        <section class="return_panel<?php include("register#.php"); global $err; echo ""; if($err == 1) {echo "_valid";} if($err == 2) {echo "_unvalid";} if($err == 0) {echo "";}  ?>">
+            <p>
+                <?php 
 
-            if(!empty($pseudo) && !empty($email) && !empty($password)){
-             
-                include 'database.php';
-                global $db;
+                include("register#.php");
 
-                //hachage du password
+                global $err_status;
+                global $err;
+                echo $err_status."<br>";
 
-                $hash_opt = ['cost' => 12,];
-                $password = password_hash($password, PASSWORD_BCRYPT, $hash_opt);
-                
-                $q = $db->prepare("INSERT INTO users(name,email,password) VALUES(:name,:email,:password)");
-                try {
-                    $q->execute([
-                        'name' => $pseudo,
-                        'email' => $email,
-                        'password' => $password
-                    ]);
-                } catch (PDOException $e) {
-                    $num_rows = mysql_num_rows($q);
-
-                    if ($num_rows) {
-                           trigger_error('It exists.', E_USER_WARNING);
-                    }       
-                    echo $e;
+                if ($err_status == 1) {echo "Runned";} 
+                if ($err_status == 2) {
+                    
+                    $err_code = $err->getCode();
+                    switch ($err_code) {
+                        case 23000:
+                            echo "Un compte avec ce nom existe déjà [". $err->getFile()." at ". $err->getLine()."]<br>".$err->getMessage();
+                            break;
+                        
+                        default:
+                            echo "Error was occured : ". $err;
+                            break;
+                    }
+                    
                 }
                 
-            }
-
-            echo 'form sended<br/>';
+                
+                
             
-        }
-        
-        
-        
-        
-        ?>
+                 ?>
+                
+            </p>
+        </section>
+    </form>
 </section>
-    </body>
+</body>
 </html>

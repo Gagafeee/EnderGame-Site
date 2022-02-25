@@ -7,7 +7,7 @@
         <div class="statue">
         <div id="round"></div>
         <p class="text" id="server-statue-text">Loading...</p>
-        <script src="menu.js"></script>
+          <script src="../menu.js" type="text/javascript"></script>
       </div>
       </div>
       <nav>

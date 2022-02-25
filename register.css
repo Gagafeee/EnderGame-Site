@@ -2,9 +2,9 @@
     width: 100%;
     height: 80vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    
 }
 
 #register {
@@ -36,31 +36,33 @@
 }
 
 #register .input::-webkit-input-placeholder {
-   text-align: center;
+    text-align: center;
     color: var(--text-color);
     font-weight: 600;
     font-family: 'Quicksand';
 }
 
-#register .input:-moz-placeholder { /* Firefox 18- */
-    text-align: center; 
+#register .input:-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
     color: var(--text-color);
     font-weight: 600;
-    font-family: 'Quicksand'; 
+    font-family: 'Quicksand';
 }
 
-#register .input::-moz-placeholder {  /* Firefox 19+ */
-   text-align: center;  
-   color: var(--text-color);
-   font-weight: 600;
-   font-family: 'Quicksand';
+#register .input::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
 }
 
-#register .input:-ms-input-placeholder {  
-   text-align: center; 
-   color: var(--text-color);
-   font-weight: 600;
-   font-family: 'Quicksand';
+#register .input:-ms-input-placeholder {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
 }
 
 #register .button {
@@ -69,4 +71,30 @@
     color: #fff;
     font-weight: 700;
     font-family: 'Quicksand';
+}
+
+.return_panel {
+    display: none;
+}
+
+.return_panel_valid {
+    width: 50%;
+    height: 10%;
+    background-color: var(--valid);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5vw;
+}
+
+.return_panel_unvalid {
+    width: 50%;
+    height: 10%;
+    background-color: var(--unvalid);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 5vw;
 }
