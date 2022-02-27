@@ -1,3 +1,5 @@
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <link rel="stylesheet" href="menu.css" type="text/css"></link>
       <iframe src="http://node02.myhoster.fr:25567" onload="serverIsOn()" style="display:none" id="servergeter"></iframe>
       <a href="../index.html" class="title">EnderGame</a>

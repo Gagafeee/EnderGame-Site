@@ -3,7 +3,7 @@
     height: 80vh;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -19,7 +19,8 @@
 }
 
 #register p {
-    font-size: 2vw
+    font-size: 2vw;
+    font-weight: 700;
 }
 
 #register .input {

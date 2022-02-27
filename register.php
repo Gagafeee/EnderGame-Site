@@ -12,6 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="dephault.css"></link>
         <link rel="stylesheet" href="register.css"></link>
+        <script type="module" src="../database.js"></script>
     </head>
     <body class="theme-dark">
         <!--[if lt IE 7]>
@@ -32,40 +33,98 @@
             <input class="button" type="submit" name="formsend" id="formsend" value="Créer">
         
         
-        <section class="return_panel<?php include("register#.php"); global $err; echo ""; if($err == 1) {echo "_valid";} if($err == 2) {echo "_unvalid";} if($err == 0) {echo "";}  ?>">
-            <p>
+        
                 <?php 
+                
+                    $err_status = 0;
+                    $err = new Exception;
 
-                include("register#.php");
-
-                global $err_status;
-                global $err;
-                echo $err_status."<br>";
-
-                if ($err_status == 1) {echo "Runned";} 
-                if ($err_status == 2) {
-                    
-                    $err_code = $err->getCode();
-                    switch ($err_code) {
-                        case 23000:
-                            echo "Un compte avec ce nom existe déjà [". $err->getFile()." at ". $err->getLine()."]<br>".$err->getMessage();
-                            break;
+                        if(isset($_POST['formsend'])){
+                            $pseudo = $_POST['pseudo'];
+                            $email = $_POST['email'];
+                            $password = $_POST['password'];
+                            $user_id = 0;
+                            $permission_level = 0;
+                            $tags = null;
                         
-                        default:
-                            echo "Error was occured : ". $err;
-                            break;
-                    }
-                    
-                }
+                            if(!empty($pseudo) && !empty($email) && !empty($password)){
+                            
+                                include 'database.php';
+                                global $db;
+                                global $err;
+                                global $err_status;
+                            
+                                //hachage du password
+                            
+                                $hash_opt = ['cost' => 12,];
+                                $password = password_hash($password, PASSWORD_BCRYPT, $hash_opt);
+
+                                $q = $db->prepare("INSERT INTO users(name,email,password) VALUES(:name,:email,:password)");
+                                $err_status = 1;
+                                try {
+                                    $q->execute([
+                                        'name' => $pseudo,
+                                        'email' => $email,
+                                        'password' => $password
+                                    ]);
+                                } catch (PDOException $e) {      
+                                   $err_status = 2;
+                                   $err = $e;
+                                
+                                }
+                            }
+
+                        }
+
+                    ?>
+
                 
-                
-                
-            
-                 ?>
-                
-            </p>
-        </section>
+           
+        
     </form>
+    <section class="return_panel" id="return_panel">
+            <p id="err_text"> </p>
+            <script>
+                    var err_code = "<?=$err->getCode()?>";
+                    var err_status = "<?=$err_status?>";
+                    var err = "<?=$err->getMessage()?>";
+                        console.log(err_code);
+                        if(err_status != 0){
+                        text = document.getElementById("err_text");
+                        panel = document.getElementById("return_panel");
+
+                        text.innerHTML = "Unable to display error [InternalError]";
+                        panel.className = "return_panel_unvalid";
+
+                        if(err_status == 1){
+                            text.innerHTML = "Accound Created Successfully";
+                            panel.className = "return_panel_valid";
+                        }
+                        if(err_status == 3){
+                            text.innerHTML = "[Internal Error] Cannot connect to database";
+                            panel.className = "return_panel_unvalid";
+                        }
+                        if(err_status == 2){
+                            panel.className = "return_panel_unvalid";
+                            text.innerHTML = "[Internal ERROR]]";
+                            
+                            switch (err_code) {
+                                case "23000":
+                                        text.innerHTML = "An account whith this name/email already exists";
+                                        break;  
+                                default:
+                                text.innerHTML = "An error occurred";
+                                    console.log(err);
+                                    break;
+                            }
+
+
+                        }
+                        
+                        panel.style.display = "flex";}
+                    
+                </script>
+    </section>
 </section>
 </body>
 </html>
