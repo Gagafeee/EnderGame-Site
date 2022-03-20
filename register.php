@@ -36,7 +36,7 @@
         
                 <?php 
                 
-                    $err_status = 0;
+                   /* $err_status = 0;
                     $err = new Exception;
 
                         if(isset($_POST['formsend'])){
@@ -76,12 +76,48 @@
 
                         }
 
-                    ?>
+                    */?>
 
                 
            
         
     </form>
+    <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
+            //import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+            import { getDatabase, set, ref, push, child } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
+                                
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+              apiKey: "AIzaSyArmpo4XebOJoOgCH1t1of3geAWdCL0c_g",
+              authDomain: "ender-game.firebaseapp.com",
+              databaseURL: "https://ender-game-default-rtdb.europe-west1.firebasedatabase.app",
+              projectId: "ender-game",
+              storageBucket: "ender-game.appspot.com",
+              messagingSenderId: "473855133647",
+              appId: "1:473855133647:web:9ed226575b31b1323ab4ba",
+              measurementId: "G-6SKPJJ3Z38"
+            };
+        
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            //const analytics = getAnalytics(app);
+            const database = getDatabase(app);
+
+
+            formsend.addEventListener('click',(e)=> {
+                var test = document.getElementById("pseudo").value;
+
+                const userId = push(child(ref(database), 'users')).key;
+                 set(ref(database, 'users/' + userId), {
+                     name: test
+                 });
+            });
+</script>
     <section class="return_panel" id="return_panel">
             <p id="err_text"> </p>
             <script>

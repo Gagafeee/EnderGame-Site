@@ -4,6 +4,9 @@
   "requires": true,
   "packages": {},
   "dependencies": {
-    "firebase": "^9.6.7"
+    "firebase": "^9.6.9",
+    "firebase-admin": "^10.0.2",
+    "nodejs": "^0.0.0",
+    "three": "^0.138.3"
   }
 }
