@@ -82,6 +82,17 @@
     font-weight: 700;
     font-family: 'Quicksand';
     font-size: 1.3vw;
+    transition: all 0.5s;
+}
+
+#login .button:hover {
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#login .button:active {
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
 }
 
 .return_panel {
