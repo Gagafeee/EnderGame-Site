@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dephault.css">
     </link>
-    <link rel="stylesheet" href="register.css">
+    <link rel="stylesheet" href="login.css">
     </link>
     <script type="module" src="database.js"></script>
     <link rel="stylesheet" href="menu.css" type="text/css">
@@ -33,14 +33,13 @@
     </header>
 
     <section id="page">
-        <div id="register">
+        <div id="login">
             <form method="post">
-                <p>Créer un compte</p>
-                <input class="input" type="text" name="pseudo" id="pseudo" placeholder="Votre Identifiant" required><br />
-                <input class="input" type="text" name="email" id="email" placeholder="Votre Email" required><br>
+                <p>Se connecter</p>
+                <input class="input" type="text" name="email" id="email" placeholder="Votre Email" required><br />
                 <input class="input" type="password" name="password" id="password" placeholder="Mots de passe" required>
             </form>
-            <button class="button" id="formsend">Créer</button>
+            <button class="button" id="formsend">Se connecter</button>
 
         </div>
 
@@ -51,7 +50,7 @@
     </section>
 </body>
 <script type="module">
-    import * as Authenticator from "./js/autenticator.js"; document.getElementById("formsend").addEventListener('click', function(){Authenticator.CreateAccount()});
+    import * as Authenticator from "./js/autenticator.js"; document.getElementById("formsend").addEventListener('click', function(){ Authenticator.LogIn(document.getElementById("email").value, document.getElementById("password").value); }); Authenticator.getCurrentUser();
 </script>
 
 </html>

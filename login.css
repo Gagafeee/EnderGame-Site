@@ -7,7 +7,7 @@
     align-items: center;
 }
 
-#register {
+#login {
     width: 50%;
     height: 70%;
     background-color: var(--background-color-second);
@@ -18,7 +18,7 @@
     border-radius: 5vw;
 }
 
-#register form {
+#login form {
     width: 100%;
     height: 80%;
     display: flex;
@@ -27,12 +27,12 @@
     align-items: center;
 }
 
-#register p {
+#login p {
     font-size: 2vw;
     font-weight: 700;
 }
 
-#register .input {
+#login .input {
     width: 30%;
     height: 15%;
     background: var(--background-color);
@@ -45,14 +45,14 @@
     text-align: center;
 }
 
-#register .input::-webkit-input-placeholder {
+#login .input::-webkit-input-placeholder {
     text-align: center;
     color: var(--text-color);
     font-weight: 600;
     font-family: 'Quicksand';
 }
 
-#register .input:-moz-placeholder {
+#login .input:-moz-placeholder {
     /* Firefox 18- */
     text-align: center;
     color: var(--text-color);
@@ -60,7 +60,7 @@
     font-family: 'Quicksand';
 }
 
-#register .input::-moz-placeholder {
+#login .input::-moz-placeholder {
     /* Firefox 19+ */
     text-align: center;
     color: var(--text-color);
@@ -68,20 +68,20 @@
     font-family: 'Quicksand';
 }
 
-#register .input:-ms-input-placeholder {
+#login .input:-ms-input-placeholder {
     text-align: center;
     color: var(--text-color);
     font-weight: 600;
     font-family: 'Quicksand';
 }
 
-#register .button {
-    width: 15%;
+#login .button {
+    width: 20%;
     height: 10%;
     color: #fff;
     font-weight: 700;
     font-family: 'Quicksand';
-    font-size: 1.5vw;
+    font-size: 1.3vw;
 }
 
 .return_panel {
@@ -131,7 +131,7 @@
     animation-fill-mode: forwards;
 }
 
-#err_text{
+#err_text {
     animation: return_panel_text_animation ease 1s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
@@ -143,10 +143,10 @@
         width: 0;
         left: 50vw;
     }
-
 }
+
 @keyframes return_panel_text_animation {
-    0%{
+    0% {
         color: rgba(0, 0, 0, 0);
     }
     40% {
