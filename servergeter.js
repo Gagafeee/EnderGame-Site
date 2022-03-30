@@ -35,6 +35,7 @@ function UpdateStatue() {
 
     }
     update();
+    
 
 
 }

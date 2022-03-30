@@ -85,17 +85,106 @@
     transition: all 0.5s;
 }
 
-#register .button:hover {
+#register .boutton-container{
+    width: 80%;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#register .boutton-container .button {
+    width: 30%;
+    height: 80%;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Quicksand';
+    font-size: 1.3vw;
+    transition: all 0.5s;
+}
+
+#register .boutton-container .button:hover {
     background-color: var(--background-color-third);
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
 }
-
-#register .button:active {
+#register .boutton-container .button:active {
     background-color: var(--background-color-third);
     box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
 }
 
-.return_panel {
+#register .boutton-container .button[id=google] {
+    width: 7vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+}
+
+#register .boutton-container .button[id=google] p {
+    display: none;
+}
+#register .boutton-container .button[id=google] .google-icon {
+    background-image: url(../ressources/img/icon/google.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 3vw;
+    width: 3vw;
+    
+}
+
+#register .boutton-container .button[id=google]:hover {
+    width: 30%;
+}
+#register .boutton-container .button[id=google]:hover .google-icon {
+
+} 
+#register .boutton-container .button[id=google]:hover p {
+    display: block;
+}   
+
+.login_link {
+    width: 50%;
+    min-height: 10%;
+    background-color: var(--background-color-second);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login_link .login-link-button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 1vw;
+    transition: transform 0.25s
+}
+
+.login_link .login-link-button:hover {
+    transform: translateX(10px);
+}
+
+.login_link p, .login-link-button a{
+    font-size: 1.3vw;
+}
+
+.login_link .login-link-button a {
+    font-weight: 600;
+}
+
+.login_link .login-link-button .icon {
+    background-image: url(../ressources/img/icon/arrow_right.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 2vw;
+    width: 2vw;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(70%) sepia(55%) saturate(486%) hue-rotate(60deg) brightness(95%) contrast(84%);
+}
+
+/*.return_panel {
     display: none;
     position: absolute;
     bottom: 5vh;
@@ -163,4 +252,4 @@
     40% {
         color: rgba(0, 0, 0, 0);
     }
-}
+}*/

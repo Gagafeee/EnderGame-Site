@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
+import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
 import { getDatabase, set, ref, push, child, onValue, get } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
 const firebaseConfig = {
     apiKey: "AIzaSyArmpo4XebOJoOgCH1t1of3geAWdCL0c_g",
@@ -11,21 +11,25 @@ const firebaseConfig = {
     appId: "1:473855133647:web:9ed226575b31b1323ab4ba",
     measurementId: "G-6SKPJJ3Z38"
 };
+
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
 
+const Googleprovider = new GoogleAuthProvider();
+Googleprovider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+
 const dateManager = new Date();
-
 import * as Umanager from "./usermanager.js";
-
+import * as Push from "../ressources/module/push/push-module.js";
+//---------------------------------------------------
 function CreateUserWithEmailAndPassword(auth, email, password) {
     var name = document.getElementById("pseudo").value;
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
-    const return_panel = document.getElementById("return_panel");
     if (isUserLogged() == false) {
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -36,11 +40,8 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
                     uid: user.uid,
                     lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
                 });
-                //document.cookie = "username=" + name + ";";
-                //document.cookie = "email=" + email + ";";
                 document.cookie = "uid=" + user.uid; + ";";
-                return_panel.children[0].innerHTML = "Created Succifully";
-                return_panel.className = "return_panel_valid";
+                Push.PushUp(0, "Created Succifully");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -48,35 +49,70 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
                 console.log(errorMessage);
                 console.log(errorCode);
 
-                return_panel.className = "return_panel_unvalid";
                 switch (errorCode) {
                     case "auth/email-already-in-use":
-                        return_panel.children[0].innerHTML = "Cette adress/pseudo est deja utilisé";
+                        Push.PushUp(3, "Cette adress/pseudo est deja utilisé");
                         break;
                     case "auth/missing-email":
-                        return_panel.children[0].innerHTML = "Veuillez ajouter une email";
+                        Push.PushUp(2, "Veuillez ajouter une email");
                         break;
                     case "auth/invalid-email":
-                        return_panel.children[0].innerHTML = "Veuillez specifiez une email valide";
+                        Push.PushUp(2, "Veuillez specifiez une email valide");
                         break;
                     case "auth/internal-error":
-                        return_panel.children[0].innerHTML = "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)"
+                        Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
                         break;
                     case "auth/weak-password":
-                        return_panel.children[0].innerHTML = "Le mots de passe doit contenir au moin 6 charactères"
+                        Push.PushUp(2, "Le mots de passe doit contenir au moin 6 charactères");
                         break;
                     default:
-                        return_panel.children[0].innerHTML = errorCode;
+                        Push.PushUp(3, errorCode);
                         break;
                 }
             });
     } else {
-        return_panel.children[0].innerHTML = "Vous êtes déjà authentifié !";
-        return_panel.className = "return_panel_unvalid";
+        Push.PushUp(2, "Vous êtes déja authentifié");
     }
 }
 
-function CreateAccount() {
+function CreateAccountWithPopup(auth, provider) {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+            console.log(user.name);
+            console.log(user.email);
+            console.log(user.uid);
+            set(ref(database, 'users/' + user.uid), {
+                name: user.displayName,
+                email: user.email,
+                uid: user.uid,
+                lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+            });
+            document.cookie = "uid=" + user.uid; + ";";
+            Push.PushUp(0, "Created Succifully");
+            Umanager.setUserInfo();
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+            console.error(errorCode);
+            Push.PushUp(3, "Cannot login : " + errorCode);
+        });
+}
+
+
+
+function CreateAccount(email, password) {
 
     CreateUserWithEmailAndPassword(auth, email, password);
     console.log("Created user");
@@ -86,61 +122,113 @@ function CreateAccount() {
 
 }
 
+function CreateAccountWithGoogle() {
+    CreateAccountWithPopup(auth, Googleprovider);
+}
+
+//---------------------------------------------------
+
+function LogInWithGoogle() {
+    SignInWithPopup(auth, Googleprovider);
+}
+
 function LogIn(email, password) {
     if (isUserLogged() == false) {
+        console.log(email, password);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
                 document.cookie = "uid=" + user.uid; + ";";
                 console.log("logged as :" + user.email);
-                Umanager.setUserInfo();
-                return_panel.children[0].innerHTML = "Authentified at : " + email;
-                return_panel.className = "return_panel_valid";
+                Push.PushUp(0, "Authentified at : " + email);
                 getCurrentUser()
-                .then((res) => {
-                    set(ref(database, 'users/' + user.uid), {
-                    name: res.name,
-                    email: email,
-                    uid: user.uid,
-                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
-                });
-                })
-                .catch((err) => {
-                    
-                });
-                
+                    .then((res) => {
+                        set(ref(database, 'users/' + user.uid), {
+                            name: res.name,
+                            email: email,
+                            uid: user.uid,
+                            lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                        });
+
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                    });
+                Umanager.setUserInfo();
+
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.error("cannot loggin :" + errorMessage);
+                console.error("cannot loggin : " + errorMessage + "  " + error);
 
-                return_panel.className = "return_panel_unvalid";
-                switch (errorMessage) {
+
+                switch (errorCode) {
                     case "auth/missing-email":
-                        return_panel.children[0].innerHTML = "Veuillez ajouter une email";
+                        Push.PushUp(2, "Veuillez ajouter une email");
                         break;
                     case "auth/user-not-found":
-                        return_panel.children[0].innerHTML = "Utilisateur non trouvé";
+                        Push.PushUp(3, "Utilisateur non trouvé");
                         break;
                     case "auth/internal-error":
-                        return_panel.children[0].innerHTML = "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)"
+                        Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
                         break;
                     case "auth/wrong-password":
-                        return_panel.children[0].innerHTML = "Le mots de passe n'est pas valide"
+                        Push.PushUp(3, "Le mots de passe n'est pas valide");
                         break;
                     default:
-                        return_panel.children[0].innerHTML = errorCode;
+                        Push.PushUp(3, errorCode);
                         break;
                 }
             });
     } else {
         console.warn("User already logged");
-        return_panel.className = "return_panel_unvalid";
-        return_panel.children[0].innerHTML = "Vous êtes déjà authentifié";
+        Push.PushUp(2, "Vous êtes déjà authentifié");
     }
 }
+
+function SignInWithPopup(auth, provider) {
+    signInWithPopup(auth, provider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // ...
+            document.cookie = "uid=" + user.uid; + ";";
+            console.log("logged as :" + user.email);
+            Push.PushUp(0, "Authentified as : " + user.email);
+            getCurrentUser()
+                .then((res) => {
+                    set(ref(database, 'users/' + user.uid), {
+                        name: res.name,
+                        email: email,
+                        uid: user.uid,
+                        lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                    });
+
+                })
+                .catch((err) => {
+                    console.log(err);
+                });
+            Umanager.setUserInfo();
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+            console.error(errorCode);
+            Push.PushUp(3, "Cannot login : " + errorCode);
+        });
+}
+
+//---------------------------------------------------
 
 function getLogin() {
     if (readCookie('uid')) {
@@ -154,6 +242,7 @@ function getLogin() {
                     Umanager.SetUserNotAuthenticated();
                     eraseCookie("uid");
                     console.warn("AutouserAuth cookie is not valide logout...");
+                    Push.PushUp(2, "Your session has expired");
                 }
             })
             .catch((err) => {
@@ -164,6 +253,7 @@ function getLogin() {
     } else {
         Umanager.SetUserNotAuthenticated();
         console.log("Cannot read user id");
+
     }
 }
 
@@ -178,15 +268,15 @@ function DateIsValid(d) {
         dateManager.getDate(),
         dateManager.getHours()
     ];
-    
+
     const isSameDate = date[0] === currentDate[0] &&
-    date[2] === currentDate[2] &&
-    date[1] === currentDate[1];
-    if(isSameDate) {
-        if(date[3] == currentDate[3]) {
+        date[2] === currentDate[2] &&
+        date[1] === currentDate[1];
+    if (isSameDate) {
+        if (date[3] == currentDate[3]) {
             return true;
-        }else{return false;}
-    }else{
+        } else { return false; }
+    } else {
         return false;
     }
 
@@ -232,6 +322,19 @@ function getCurrentUser() {
         }
     });
 }
+//----------------------------------------------------------------
+function Disconnect() {
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        eraseCookie('uid');
+        Umanager.SetUserNotAuthenticated();
+        console.log("Signed out");
+    }).catch((error) => {
+        console.error(error);
+        Push.PushUp(3, error);
+    });
+
+}
 
 
 
@@ -251,8 +354,12 @@ function eraseCookie(name) {
     document.cookie = name + '=; Max-Age=0'
 }
 
+(function() {
+    setTimeout(() => {
+        getLogin();
+    }, 100);
+})();
 
 
-getLogin();
 
-export { CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser };
+export { CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle };

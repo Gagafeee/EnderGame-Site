@@ -75,9 +75,17 @@
     font-family: 'Quicksand';
 }
 
-#login .button {
-    width: 20%;
-    height: 10%;
+#login .boutton-container{
+    width: 80%;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#login .boutton-container .button {
+    width: 30%;
+    height: 80%;
     color: #fff;
     font-weight: 700;
     font-family: 'Quicksand';
@@ -85,17 +93,91 @@
     transition: all 0.5s;
 }
 
-#login .button:hover {
+#login .boutton-container .button:hover {
     background-color: var(--background-color-third);
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
 }
-
-#login .button:active {
+#login .boutton-container .button:active {
     background-color: var(--background-color-third);
     box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
 }
 
-.return_panel {
+#login .boutton-container .button[id=google] {
+    width: 7vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+}
+
+#login .boutton-container .button[id=google] p {
+    display: none;
+}
+#login .boutton-container .button[id=google] .google-icon {
+    background-image: url(../ressources/img/icon/google.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 3vw;
+    width: 3vw;
+    
+}
+
+#login .boutton-container .button[id=google]:hover {
+    width: 30%;
+}
+#login .boutton-container .button[id=google]:hover .google-icon {
+
+} 
+#login .boutton-container .button[id=google]:hover p {
+    display: block;
+}   
+
+
+
+
+.register_link {
+    width: 50%;
+    min-height: 10%;
+    background-color: var(--background-color-second);
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.register_link .register-link-button {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    margin-left: 1vw;
+    transition: transform 0.25s
+}
+
+.register_link .register-link-button:hover {
+    transform: translateX(10px);
+}
+
+.register_link p, .register_link a{
+    font-size: 1.3vw;
+}
+
+.register_link .register-link-button a {
+    font-weight: 600;
+}
+
+.register_link .register-link-button .icon {
+    background-image: url(../ressources/img/icon/arrow_right.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 2vw;
+    width: 2vw;
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(70%) sepia(55%) saturate(486%) hue-rotate(60deg) brightness(95%) contrast(84%);
+}
+
+/*.return_panel {
     display: none;
     position: absolute;
     bottom: 5vh;
@@ -163,4 +245,4 @@
     40% {
         color: rgba(0, 0, 0, 0);
     }
-}
+}*/

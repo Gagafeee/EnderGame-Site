@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="../ressources/module/push/push-style.css">
+<div class="push-success" id="push-hide">
+    <div class="color"></div>
+    <div class="icon"></div>
+    <p><strong id="push-title">Success!</strong>Success!</p>
+    <div class="cross"></div>
+    <script type="module">
+        import { closePanel } from "../ressources/module/push/push-module.js";
+        document.getElementsByClassName("cross")[0].addEventListener("click", function(){
+            closePanel();
+        })
+    </script>
+</div>
+<script type="module" src="../ressources/module/push/push-module.js"></script>
