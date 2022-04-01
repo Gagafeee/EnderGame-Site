@@ -75,7 +75,7 @@
     font-family: 'Quicksand';
 }
 
-#login .boutton-container{
+#login .boutton-container {
     width: 80%;
     height: 15%;
     display: flex;
@@ -97,12 +97,14 @@
     background-color: var(--background-color-third);
     box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
 }
+
 #login .boutton-container .button:active {
     background-color: var(--background-color-third);
     box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
 }
 
-#login .boutton-container .button[id=google] {
+#login .boutton-container .button[id=google],
+#login .boutton-container .button[id=microsoft] {
     width: 7vh;
     display: flex;
     justify-content: space-around;
@@ -110,9 +112,11 @@
     cursor: pointer;
 }
 
-#login .boutton-container .button[id=google] p {
+#login .boutton-container .button[id=google] p,
+#login .boutton-container .button[id=microsoft] p {
     display: none;
 }
+
 #login .boutton-container .button[id=google] .google-icon {
     background-image: url(../ressources/img/icon/google.png);
     background-position: center;
@@ -120,21 +124,26 @@
     background-size: cover;
     height: 3vw;
     width: 3vw;
-    
+}
+#login .boutton-container .button[id=microsoft] .microsoft-icon {
+    background-image: url(../ressources/img/icon/microsoft.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 2.5vw;
+    width: 2.5vw;
 }
 
-#login .boutton-container .button[id=google]:hover {
+#login .boutton-container .button[id=google]:hover,
+#login .boutton-container .button[id=microsoft]:hover {
     width: 30%;
 }
-#login .boutton-container .button[id=google]:hover .google-icon {
 
-} 
-#login .boutton-container .button[id=google]:hover p {
+
+#login .boutton-container .button[id=google]:hover p,
+#login .boutton-container .button[id=microsoft]:hover p {
     display: block;
-}   
-
-
-
+}
 
 .register_link {
     width: 50%;
@@ -158,7 +167,8 @@
     transform: translateX(10px);
 }
 
-.register_link p, .register_link a{
+.register_link p,
+.register_link a {
     font-size: 1.3vw;
 }
 
@@ -176,6 +186,7 @@
     cursor: pointer;
     filter: brightness(0) saturate(100%) invert(70%) sepia(55%) saturate(486%) hue-rotate(60deg) brightness(95%) contrast(84%);
 }
+
 
 /*.return_panel {
     display: none;

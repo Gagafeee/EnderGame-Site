@@ -44,14 +44,21 @@
                     <p>Google</p>
                 </button>
                 <button class="button" id="formsend">Se connecter</button>
-                <!---<button class="button" id="microsoft">Se connecter</button>-->
+                <button class="button" id="microsoft">
+                    <div class="microsoft-icon"></div>
+                    <p>Microsoft</p>
+                </button>
             </div>
 
 
         </div>
         <script type="module">
-            import * as Authenticator from "./js/autenticator.js"; document.getElementById("formsend").addEventListener('click', function(){ Authenticator.LogIn(document.getElementById("email").value, document.getElementById("password").value); }); document.getElementById("google").addEventListener('click',
-            function(){ Authenticator.LogInWithGoogle()}); Authenticator.getCurrentUser();
+            import * as Authenticator from "./js/autenticator.js";
+            import * as Push from "./ressources/module/push/push-module.js";
+            document.getElementById("formsend").addEventListener('click', function(){ Authenticator.LogIn(document.getElementById("email").value, document.getElementById("password").value); });
+            document.getElementById("google").addEventListener('click',function(){ Authenticator.LogInWithGoogle()});
+            document.getElementById("microsoft").addEventListener('click',function(){ Push.PushUp(1,"Microsoft login is not available yet "/*TODO: add microsoft connexion here*/)});
+             Authenticator.getCurrentUser();
         </script>
         <div class="register_link">
             <p>Do you need an account ?</p>

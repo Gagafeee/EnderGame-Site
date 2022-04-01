@@ -6,6 +6,7 @@
   "dependencies": {
     "firebase": "^9.6.9",
     "firebase-admin": "^10.0.2",
+    "mcapi": "^1.0.1",
     "nodejs": "^0.0.0",
     "three": "^0.138.3"
   }

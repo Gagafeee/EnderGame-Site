@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
-import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signOut } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
+import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signOut, getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
 import { getDatabase, set, ref, push, child, onValue, get } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
 const firebaseConfig = {
     apiKey: "AIzaSyArmpo4XebOJoOgCH1t1of3geAWdCL0c_g",
@@ -130,6 +130,13 @@ function CreateAccountWithGoogle() {
 
 function LogInWithGoogle() {
     SignInWithPopup(auth, Googleprovider);
+    getCurrentUser()
+    .then((res) => {
+        
+    })
+    .catch(err => {
+        Push.PushUp(1,"You try to login but you don't have account: Creating...");
+    })
 }
 
 function LogIn(email, password) {
@@ -197,23 +204,35 @@ function SignInWithPopup(auth, provider) {
             // The signed-in user info.
             const user = result.user;
             // ...
-            document.cookie = "uid=" + user.uid; + ";";
-            console.log("logged as :" + user.email);
-            Push.PushUp(0, "Authentified as : " + user.email);
-            getCurrentUser()
-                .then((res) => {
-                    set(ref(database, 'users/' + user.uid), {
-                        name: res.name,
-                        email: email,
-                        uid: user.uid,
-                        lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
-                    });
+             //this is what you need
+             
+             var uinfo = getAdditionalUserInfo(result);
+             console.log(uinfo);
+             var isNewUser = uinfo.isNewUser;
+             if (isNewUser) {
+                  result.user.delete();
+                  Push.PushUp(1,"This Google Account is new please Create Account before connect to it")
+             } else {
+                 // user exist
+                 document.cookie = "uid=" + user.uid; + ";";
+                 console.log("logged as :" + user.email);
+                 Push.PushUp(0, "Authentified as : " + user.email);
+                 getCurrentUser()
+                     .then((res) => {
+                         set(ref(database, 'users/' + user.uid), {
+                             name: res.name,
+                             email: email,
+                             uid: user.uid,
+                             lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                         });
 
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-            Umanager.setUserInfo();
+                     })
+                     .catch((err) => {
+                         console.log(err);
+                     });
+                 Umanager.setUserInfo();
+             }
+            
         }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -223,8 +242,8 @@ function SignInWithPopup(auth, provider) {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
-            console.error(errorCode);
-            Push.PushUp(3, "Cannot login : " + errorCode);
+            console.error(error.message);
+            Push.PushUp(3, "Cannot login : " + error.message);
         });
 }
 
@@ -309,6 +328,7 @@ function getCurrentUser() {
                         resolve(snapshot.val());
                     } else {
                         console.log("No data available");
+                        reject("no-data");
                     }
                 }).catch((error) => {
                     console.error(error);
@@ -322,6 +342,8 @@ function getCurrentUser() {
         }
     });
 }
+
+
 //----------------------------------------------------------------
 function Disconnect() {
     signOut(auth).then(() => {

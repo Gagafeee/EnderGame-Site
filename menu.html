@@ -11,7 +11,7 @@
         <div class="statue">
             <div id="round"></div>
             <p class="text" id="server-statue-text">Loading...</p>
-            <script src="./servergeter.js"></script>
+            <script type="module" src="./servergeter.js"></script>
         </div>
     </div>
     <nav>
@@ -41,10 +41,7 @@
         </div>
     </div>
     <script type="module">
-        import { updateDropdown } from "./js/usermanager.js";
-        import { Disconnect } from "./js/autenticator.js";
-        document.getElementById("connect").addEventListener("click",function(){ updateDropdown(); });
-        document.getElementById("disconnection_button").addEventListener("click",function(){Disconnect();})
+        import { updateDropdown } from "./js/usermanager.js"; import { Disconnect } from "./js/autenticator.js"; document.getElementById("connect").addEventListener("click",function(){ updateDropdown(); }); document.getElementById("disconnection_button").addEventListener("click",function(){Disconnect();})
     </script>
 
 </div>
