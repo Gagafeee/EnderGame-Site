@@ -1,6 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-app.js";
-import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signOut, getAdditionalUserInfo } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
-import { getDatabase, set, ref, push, child, onValue, get } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
+import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signOut, getAdditionalUserInfo, reauthenticateWithCredential } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-auth.js";
+import { getDatabase, set, ref, update, child, onValue, get } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-database.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.6.7/firebase-storage.js";
 const firebaseConfig = {
     apiKey: "AIzaSyArmpo4XebOJoOgCH1t1of3geAWdCL0c_g",
     authDomain: "ender-game.firebaseapp.com",
@@ -15,6 +16,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const auth = getAuth(app);
+const storage = getStorage(app);
+
+
 
 const Googleprovider = new GoogleAuthProvider();
 Googleprovider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -22,6 +26,7 @@ Googleprovider.addScope('https://www.googleapis.com/auth/contacts.readonly');
 const dateManager = new Date();
 import * as Umanager from "./usermanager.js";
 import * as Push from "../ressources/module/push/push-module.js";
+import * as ReAuth from "../ressources/module/reauth/reauth-module.js";
 //---------------------------------------------------
 function CreateUserWithEmailAndPassword(auth, email, password) {
     var name = document.getElementById("pseudo").value;
@@ -38,7 +43,9 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
                     name: name,
                     email: email,
                     uid: user.uid,
-                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
+                    creationTime: user.metadata.creationTime,
+                    hasCustomPP: false
                 });
                 document.cookie = "uid=" + user.uid; + ";";
                 Push.PushUp(0, "Created Succifully");
@@ -84,14 +91,13 @@ function CreateAccountWithPopup(auth, provider) {
             // The signed-in user info.
             const user = result.user;
             // ...
-            console.log(user.name);
-            console.log(user.email);
-            console.log(user.uid);
             set(ref(database, 'users/' + user.uid), {
                 name: user.displayName,
                 email: user.email,
                 uid: user.uid,
-                lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
+                creationTime: user.metadata.creationTime,
+                hasCustomPP: false
             });
             document.cookie = "uid=" + user.uid; + ";";
             Push.PushUp(0, "Created Succifully");
@@ -129,19 +135,16 @@ function CreateAccountWithGoogle() {
 //---------------------------------------------------
 
 function LogInWithGoogle() {
-    SignInWithPopup(auth, Googleprovider);
-    getCurrentUser()
-    .then((res) => {
-        
-    })
-    .catch(err => {
-        Push.PushUp(1,"You try to login but you don't have account: Creating...");
-    })
+    if (isUserLogged()) {
+        Push.PushUp(2, "You are already logged");
+    } else {
+        SignInWithPopup(auth, Googleprovider);
+    }
+
 }
 
 function LogIn(email, password) {
     if (isUserLogged() == false) {
-        console.log(email, password);
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed in 
@@ -149,20 +152,11 @@ function LogIn(email, password) {
                 document.cookie = "uid=" + user.uid; + ";";
                 console.log("logged as :" + user.email);
                 Push.PushUp(0, "Authentified at : " + email);
-                getCurrentUser()
-                    .then((res) => {
-                        set(ref(database, 'users/' + user.uid), {
-                            name: res.name,
-                            email: email,
-                            uid: user.uid,
-                            lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
-                        });
-
-                    })
-                    .catch((err) => {
-                        console.log(err);
-                    });
+                update(ref(database, 'users/' + user.uid), {
+                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                });
                 Umanager.setUserInfo();
+                return userCredential;
 
             })
             .catch((error) => {
@@ -194,6 +188,49 @@ function LogIn(email, password) {
         Push.PushUp(2, "Vous êtes déjà authentifié");
     }
 }
+function reLogInWithGoogle() {
+    return SignInWithPopup(auth, Googleprovider);
+}
+function reLogIn(email, password) {
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                document.cookie = "uid=" + user.uid; + ";";
+                console.log("logged as :" + user.email);
+                Push.PushUp(0, "Authentified at : " + email);
+                update(ref(database, 'users/' + user.uid), {
+                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                });
+                Umanager.setUserInfo();
+                return userCredential;
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.error("cannot loggin : " + errorMessage + "  " + error);
+
+
+                switch (errorCode) {
+                    case "auth/missing-email":
+                        Push.PushUp(2, "Veuillez ajouter une email");
+                        break;
+                    case "auth/user-not-found":
+                        Push.PushUp(3, "Utilisateur non trouvé");
+                        break;
+                    case "auth/internal-error":
+                        Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
+                        break;
+                    case "auth/wrong-password":
+                        Push.PushUp(3, "Le mots de passe n'est pas valide");
+                        break;
+                    default:
+                        Push.PushUp(3, errorCode);
+                        break;
+                }
+            });
+}
 
 function SignInWithPopup(auth, provider) {
     signInWithPopup(auth, provider)
@@ -204,35 +241,26 @@ function SignInWithPopup(auth, provider) {
             // The signed-in user info.
             const user = result.user;
             // ...
-             //this is what you need
-             
-             var uinfo = getAdditionalUserInfo(result);
-             console.log(uinfo);
-             var isNewUser = uinfo.isNewUser;
-             if (isNewUser) {
-                  result.user.delete();
-                  Push.PushUp(1,"This Google Account is new please Create Account before connect to it")
-             } else {
-                 // user exist
-                 document.cookie = "uid=" + user.uid; + ";";
-                 console.log("logged as :" + user.email);
-                 Push.PushUp(0, "Authentified as : " + user.email);
-                 getCurrentUser()
-                     .then((res) => {
-                         set(ref(database, 'users/' + user.uid), {
-                             name: res.name,
-                             email: email,
-                             uid: user.uid,
-                             lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
-                         });
+            //this is what you need
 
-                     })
-                     .catch((err) => {
-                         console.log(err);
-                     });
-                 Umanager.setUserInfo();
-             }
-            
+            var uinfo = getAdditionalUserInfo(result);
+            console.log(uinfo);
+            var isNewUser = uinfo.isNewUser;
+            if (isNewUser) {
+                result.user.delete();
+                Push.PushUp(1, "This Google Account is new please Create Account before connect to it")
+            } else {
+                // user exist
+                document.cookie = "uid=" + user.uid; + ";";
+                console.log("logged as :" + user.email);
+                Push.PushUp(0, "Authentified as : " + user.email);
+                update(ref(database, 'users/' + user.uid), {
+                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+                });
+                Umanager.setUserInfo();
+                return credential;
+            }
+
         }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;
@@ -317,12 +345,27 @@ function getCurrentUserId() {
     }
 }
 
+function userIsDisabled(uid){
+    const dbRef = ref(getDatabase());
+                get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        return snapshot.isDisabled;
+                    } else {
+                        console.log("No data available");
+                        return("no-data");
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                });
+}
+
 
 function getCurrentUser() {
     return new Promise((resolve, reject) => {
         if (isUserLogged()) {
             if (true) {
-                const dbRef = ref(getDatabase());
+                if(!userIsDisabled(readCookie('uid'))){
+                  const dbRef = ref(getDatabase());
                 get(child(dbRef, `users/${readCookie('uid')}`)).then((snapshot) => {
                     if (snapshot.exists()) {
                         resolve(snapshot.val());
@@ -332,13 +375,18 @@ function getCurrentUser() {
                     }
                 }).catch((error) => {
                     console.error(error);
-                });
+                });  
+                }else{
+                    console.log("User Disabled");
+                    Push.PushUp(3, "Your account has deleted");
+                }
+                
             } else {
                 reject("Promise rejected");
             }
         } else {
             console.warn("User was not logged");
-            return false;
+            throw new Error("User-not-logged")
         }
     });
 }
@@ -357,9 +405,63 @@ function Disconnect() {
     });
 
 }
+//----------------------------------------------------------------
+function SaveImage(image) {
+    return new Promise((resolve, reject) => {
+        getCurrentUser()
+            .then((user) => {
+                const storageRef = sRef(storage, 'user-pp/' + user.uid + "-profile-picture");
+                uploadBytes(storageRef, image).then((res) => {
+                        update(ref(database, 'users/' + user.uid), {
+                            hasCustomPP: true
+                        });
+                        resolve(true);
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        reject(error);
+                    })
+            })
+    })
+}
 
+function GetUserProfilePicture(uid) {
+    return new Promise((resolve, reject) => {
+        const gsRef = sRef(storage, "user-pp/" + uid + "-profile-picture");
+        getDownloadURL(gsRef).then((downloadURL) => {
+                resolve(downloadURL);
+            })
+            .catch((error) => {
+                reject(error);
+            })
 
-
+    })
+}
+//----------------------------------------------------------------
+function DeleteCurrentAccount() {
+    getCurrentUser()
+        .then((user) => {
+            if (DateIsValid(user.lastSignInDate)) {
+                ReAuth.reauth()
+                    .then((response) => {
+                        //delete user picture
+                        const gsRef = sRef(storage, "user-pp/" + user.uid + "-profile-picture");
+                        deleteObject(gsRef);
+                        //disable database info
+                        update(ref(database, 'users/' + user.uid), {
+                            isDisabled: true
+                        });
+                        //delete account
+                        auth.currentUser.delete()
+                        console.log("user deleted");
+                        Disconnect();
+                        Umanager.SetUserNotAuthenticated();
+                        window.location.reload();
+                    })
+            }
+        })
+}
+//----------------------------------------------------------------
 
 function readCookie(name) {
     var nameEQ = name + "=";
@@ -384,4 +486,4 @@ function eraseCookie(name) {
 
 
 
-export { CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle };
+export { reLogInWithGoogle,reLogIn,CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };

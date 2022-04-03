@@ -2,16 +2,20 @@
 .theme-dark {
     --background-color: #24282B;
     --background-color-second: #2E3438;
-    --background-color-third: #24282B;
-    --background-color-white: #6b6b6b;
+    --background-color-third: #18191b;
+    --background-color-white: #777777;
     --valid: #6fd057;
     --unvalid: #BD3535;
     --text-color: #FFFFFF;
     --statue-getting: #494949;
     --statue-online: #6fd057;
     --statue-offline: #BD3535;
+    --purple: #8d10d0;
+    --blue: #1a31c9;
     --face-icon: url(../ressources/img/icon/emoji.svg);
     --leave-icon: url(../ressources/img/icon/leave.svg);
+    --edit-icon: url(../ressources/img/icon/edit.svg);
+    --close-icon: url(../ressources/img/icon/close.svg);
 }
 
 body {
@@ -48,4 +52,36 @@ a {
 #page {
     width: 100vw;
     height: 82vh;
+}
+
+#loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--background-color);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader {
+
+    border: 16px solid var(--background-color-second);
+    border-top: 16px solid var(--purple);
+    border-radius: 50%;
+    width: 8vw;
+    height: 8vw;
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }

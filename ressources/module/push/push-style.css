@@ -57,6 +57,7 @@
     align-items: center;
     overflow: hidden;
     animation: close 1s;
+    z-index: 1001;
 }
 
 #push {
@@ -74,6 +75,7 @@
     align-items: center;
     overflow: hidden;
     animation: pushUp 1.5s;
+    z-index: 1001;
 }
 
 #push-closing .color, #push .color {

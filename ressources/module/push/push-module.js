@@ -31,6 +31,7 @@ function PushUp(type, message) {
     }
     content.innerHTML = message;
     panel.id = "push";
+    console.log("pushing");
 }
 
 function closePanel() {

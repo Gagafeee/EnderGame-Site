@@ -10,6 +10,13 @@ function setUserInfo() {
         .then((res) => {
             console.log("User logged as : " + res.name);
             userName.innerHTML = res.name;
+            //set image if exist
+            if(res.hasCustomPP == true){
+                Autenticator.GetUserProfilePicture(res.uid)
+                .then((url) => {
+                    userIcon.style.backgroundImage = "url(" + url + ")";
+                })
+            }
         })
         .catch((err) => {
             console.error(err);
@@ -20,11 +27,18 @@ function setUserInfo() {
 }
 
 function SetUserNotAuthenticated() {
+    if(document.getElementById("Account") != null){
+        window.history.back();
+
+    }
     document.getElementById("user-name").innerHTML = "Se connecter";
+    const userIcon = document.getElementById("user-icon");
+    userIcon.style.backgroundImage = "url(../ressources/img/icon/user.svg)";
     const dropdown = document.getElementById("menu-user-dropdown");
     const content = document.getElementById("connect");
     content.setAttribute("onclick", "window.location='login.html'");
     dropdown.className = "dropdown";
+    Push.PushUp(0,"Disconnected");
 }
 
 function updateDropdown() {

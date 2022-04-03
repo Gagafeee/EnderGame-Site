@@ -1,0 +1,184 @@
+#reauth[class="hide"]{
+    display: none;
+}
+#reauth[class="show"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(33, 33, 33, 0.769);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1500;
+}
+
+#reauth[class="show"] #content {
+    background-color: var(--background-color-second);
+    width: 70%;
+    height: 70%;
+    border-radius: 30px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#reauth[class="show"] #content .title {
+    font-size: 2.5vw;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+#reauth[class="show"] #content .login {
+    width: 60%;
+    height: 70%;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: var(--background-color);
+}
+
+
+#reauth[class="show"] #content .login form {
+    width: 80%;
+    height: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+
+#reauth[class="show"] #content .login .input {
+    width: 40%;
+    height: 25%;
+    background: var(--background-color-second);
+    border-radius: 40px;
+    border: 0px;
+    box-shadow: inset 4px 4px 3px rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Quicksand';
+    text-align: center;
+}
+
+#reauth[class="show"] #content .login .input::-webkit-input-placeholder {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
+}
+
+#reauth[class="show"] #content .login .input:-moz-placeholder {
+    /* Firefox 18- */
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
+}
+
+#reauth[class="show"] #content .login .input::-moz-placeholder {
+    /* Firefox 19+ */
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
+}
+
+#reauth[class="show"] #content .login .input:-ms-input-placeholder {
+    text-align: center;
+    color: var(--text-color);
+    font-weight: 600;
+    font-family: 'Quicksand';
+}
+
+#reauth[class="show"] #content .login .boutton-container {
+    width: 80%;
+    height: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#reauth[class="show"] #content .login .boutton-container .button {
+    width: 30%;
+    height: 80%;
+    color: #fff;
+    font-weight: 700;
+    font-family: 'Quicksand';
+    font-size: 1.3vw;
+    transition: all 0.5s;
+}
+
+#reauth[class="show"] #content .login .boutton-container .button:hover {
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+#reauth[class="show"] #content .login .boutton-container .button:active {
+    background-color: var(--background-color-third);
+    box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.5);
+}
+
+#reauth[class="show"] #content .login .boutton-container .button[id=google],
+#reauth[class="show"] #content .login .boutton-container .button[id=microsoft] {
+    width: 7vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    cursor: pointer;
+}
+
+#reauth[class="show"] #content .login .boutton-container .button[id=google] p,
+#reauth[class="show"] #content .login .boutton-container .button[id=microsoft] p {
+    display: none;
+}
+
+#reauth[class="show"] #content .login .boutton-container .button[id=google] .google-icon {
+    background-image: url(../../../ressources/img/icon/google.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 3vw;
+    width: 3vw;
+}
+#reauth[class="show"] #content .login .boutton-container .button[id=microsoft] .microsoft-icon {
+    background-image: url(../../../ressources/img/icon/microsoft.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 2.5vw;
+    width: 2.5vw;
+}
+
+#reauth[class="show"] #content .login .boutton-container .button[id=google]:hover,
+#reauth[class="show"] #content .login .boutton-container .button[id=microsoft]:hover {
+    width: 30%;
+}
+
+
+#reauth[class="show"] #content .login .boutton-container .button[id=google]:hover p,
+#reauth[class="show"] #content .login .boutton-container .button[id=microsoft]:hover p {
+    display: block;
+}
+
+#reauth[class="show"] .close-button {
+    width: 3vw;
+    height: 3vw;
+    background-image: url(../../../ressources/img/icon/close.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 4vw;
+    right: 10vw;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+#reauth[class="show"] .close-button:hover {
+    transform: scale(0.9);
+}
