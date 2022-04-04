@@ -118,7 +118,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-#page #Account #profile-picture[class="edit"] #picture-tool .ptool-upload-label:hover{
+#page #Account #profile-picture[class="edit"] #picture-tool .ptool-upload-label:hover {
     background-color: var(--valid);
     transform: scale(1);
 }
@@ -143,6 +143,7 @@ input[type="file"] {
     background-color: var(--valid);
     transform: scale(1);
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-upload-label .ptool-text,
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button .ptool-text {
     display: block;
@@ -160,25 +161,31 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button[id="ptool-mcSet"] .ptool-text {
     height: 120%;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button[id="ptool-mcSet"] .ptool-text p {
     margin-top: -10px;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-upload-label .ptool-text p,
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button .ptool-text p {
     font-weight: 600;
     font-size: 1vw;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-upload-label:hover .ptool-text,
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button:hover .ptool-text {
     opacity: 100%;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button .ptool-text #ptool-text-input-container {
     display: none;
     margin-top: 10px;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button:hover .ptool-text #ptool-text-input-container {
     width: 100%;
     height: auto;
@@ -187,6 +194,7 @@ input[type="file"] {
     align-items: center;
     justify-content: space-around;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button:hover .ptool-text #ptool-text-input-container input {
     width: 80%;
     background-color: #fff;
@@ -203,6 +211,7 @@ input[type="file"] {
     background-repeat: no-repeat;
     transition: all 0.5s;
 }
+
 #page #Account #profile-picture[class="edit"] #picture-tool .ptool-button:hover .ptool-text #ptool-text-input-container #ptool-text-input-closebutton:hover {
     transform: scale(1.5);
 }
@@ -216,7 +225,6 @@ input[type="file"] {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
-    
 }
 
 #page #Account #profile-picture[class="normal"]:hover {
@@ -266,7 +274,7 @@ input[type="file"] {
     margin: 20px 0 20px 0;
 }
 
-#page #Account .infos .info {
+#page #Account .infos .content .info {
     background-color: var(--background-color-second);
     width: 45%;
     height: 70%;
@@ -274,6 +282,24 @@ input[type="file"] {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+#page #Account .infos .content .info input {
+    display: none;
+    height: 4vh;
+    width: 50%;
+    border: 0;
+    border-radius: 10px;
+    background: var(--background-color-white);
+    color: var(--text-color)
+}
+
+#page #Account .infos .content .info[id="creation-date-container"] {
+    width: 50%;
+}
+
+#page #Account .infos .content .info[id="creation-date-container"] .value {
+    margin-right: 10px;
 }
 
 #page #Account .infos .info .i-title {
@@ -293,7 +319,7 @@ input[type="file"] {
     background-position: center;
     background-repeat: no-repeat;
     background-size: 2vw;
-    height: 100%;
+    height: 8.7vh;
     width: 15%;
     border-radius: 0 20px 20px 0;
     transition: all 0.5s;
@@ -305,7 +331,9 @@ input[type="file"] {
     background-color: var(--valid);
 }
 
+
 /*---------------------------------------------------*/
+
 #page #Account .action-container {
     margin-top: 7vh;
     width: 100%;
@@ -315,7 +343,7 @@ input[type="file"] {
     justify-content: space-around;
 }
 
-#page #Account .action-container #delete-button{
+#page #Account .action-container #delete-button {
     width: 25%;
     background-color: #dc110129;
     border: 2px solid #f10606cf;
@@ -324,14 +352,17 @@ input[type="file"] {
     cursor: pointer;
     transition: all 0.5s;
 }
-#page #Account .action-container #delete-button p{
+
+#page #Account .action-container #delete-button p {
     text-align: center;
     font-weight: 600;
     transition: all 0.5s;
 }
-#page #Account .action-container #delete-button:hover{
+
+#page #Account .action-container #delete-button:hover {
     transform: scale(0.9);
 }
-#page #Account .action-container #delete-button:hover p{
+
+#page #Account .action-container #delete-button:hover p {
     color: red;
 }

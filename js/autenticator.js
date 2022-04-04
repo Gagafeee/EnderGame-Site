@@ -188,48 +188,50 @@ function LogIn(email, password) {
         Push.PushUp(2, "Vous êtes déjà authentifié");
     }
 }
+
 function reLogInWithGoogle() {
     return SignInWithPopup(auth, Googleprovider);
 }
+
 function reLogIn(email, password) {
-        signInWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                document.cookie = "uid=" + user.uid; + ";";
-                console.log("logged as :" + user.email);
-                Push.PushUp(0, "Authentified at : " + email);
-                update(ref(database, 'users/' + user.uid), {
-                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
-                });
-                Umanager.setUserInfo();
-                return userCredential;
-
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.error("cannot loggin : " + errorMessage + "  " + error);
-
-
-                switch (errorCode) {
-                    case "auth/missing-email":
-                        Push.PushUp(2, "Veuillez ajouter une email");
-                        break;
-                    case "auth/user-not-found":
-                        Push.PushUp(3, "Utilisateur non trouvé");
-                        break;
-                    case "auth/internal-error":
-                        Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
-                        break;
-                    case "auth/wrong-password":
-                        Push.PushUp(3, "Le mots de passe n'est pas valide");
-                        break;
-                    default:
-                        Push.PushUp(3, errorCode);
-                        break;
-                }
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            document.cookie = "uid=" + user.uid; + ";";
+            console.log("logged as :" + user.email);
+            Push.PushUp(0, "Authentified at : " + email);
+            update(ref(database, 'users/' + user.uid), {
+                lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
             });
+            Umanager.setUserInfo();
+            return userCredential;
+
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error("cannot loggin : " + errorMessage + "  " + error);
+
+
+            switch (errorCode) {
+                case "auth/missing-email":
+                    Push.PushUp(2, "Veuillez ajouter une email");
+                    break;
+                case "auth/user-not-found":
+                    Push.PushUp(3, "Utilisateur non trouvé");
+                    break;
+                case "auth/internal-error":
+                    Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
+                    break;
+                case "auth/wrong-password":
+                    Push.PushUp(3, "Le mots de passe n'est pas valide");
+                    break;
+                default:
+                    Push.PushUp(3, errorCode);
+                    break;
+            }
+        });
 }
 
 function SignInWithPopup(auth, provider) {
@@ -345,45 +347,42 @@ function getCurrentUserId() {
     }
 }
 
-function userIsDisabled(uid){
+function userIsDisabled(uid) {
     const dbRef = ref(getDatabase());
-                get(child(dbRef, `users/${uid}`)).then((snapshot) => {
-                    if (snapshot.exists()) {
-                        return snapshot.isDisabled;
-                    } else {
-                        console.log("No data available");
-                        return("no-data");
-                    }
-                }).catch((error) => {
-                    console.error(error);
-                });
+    get(child(dbRef, `users/${uid}`)).then((snapshot) => {
+        if (snapshot.exists()) {
+            return snapshot.isDisabled;
+        } else {
+            console.log("No data available");
+            return ("no-data");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 }
 
 
 function getCurrentUser() {
     return new Promise((resolve, reject) => {
         if (isUserLogged()) {
-            if (true) {
-                if(!userIsDisabled(readCookie('uid'))){
-                  const dbRef = ref(getDatabase());
-                get(child(dbRef, `users/${readCookie('uid')}`)).then((snapshot) => {
-                    if (snapshot.exists()) {
-                        resolve(snapshot.val());
-                    } else {
-                        console.log("No data available");
-                        reject("no-data");
-                    }
-                }).catch((error) => {
-                    console.error(error);
-                });  
-                }else{
+                if (!userIsDisabled(readCookie('uid'))) {
+                    const dbRef = ref(getDatabase());
+                    get(child(dbRef, `users/${readCookie('uid')}`)).then((snapshot) => {
+                        if (snapshot.exists()) {
+                            resolve(snapshot.val());
+                        } else {
+                            console.log("No data available");
+                            reject("no-data");
+                        }
+                    }).catch((error) => {
+                        console.error(error);
+                    });
+                } else {
                     console.log("User Disabled");
                     Push.PushUp(3, "Your account has deleted");
                 }
-                
-            } else {
-                reject("Promise rejected");
-            }
+
+            
         } else {
             console.warn("User was not logged");
             throw new Error("User-not-logged")
@@ -437,6 +436,24 @@ function GetUserProfilePicture(uid) {
 
     })
 }
+
+function ChangeCurrentUserName(username) {
+    return new Promise((resolve, reject) => {
+        getCurrentUser()
+            .then((user) => {
+                update(ref(database, 'users/' + user.uid), {
+                    name: username
+                })
+                .then((user) => {
+                    resolve(user);
+                })
+                .catch((err) => {
+                    reject(err);
+                })
+            })
+    })
+
+}
 //----------------------------------------------------------------
 function DeleteCurrentAccount() {
     getCurrentUser()
@@ -486,4 +503,4 @@ function eraseCookie(name) {
 
 
 
-export { reLogInWithGoogle,reLogIn,CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
+export { ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };

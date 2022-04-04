@@ -76,11 +76,13 @@
                     <div class="info">
                         <p class="i-title">Email :</p>
                         <p class="value" id="email">xx@y.com</p>
+                        <input type="text" id="email-input"></input>
                         <div class="i-edit-icon" id="edit-email"></div>
                     </div>
                     <div class="info">
                         <p class="i-title">Pseudo :</p>
                         <p class="value" id="username">UNAME</p>
+                        <input type="text" id="username-input" placeholder="Username"></input>
                         <div class="i-edit-icon" id="edit-username"></div>
                     </div>
                 </div>
@@ -90,7 +92,7 @@
                         <p class="value" id="language">CT-VA</p>
                         <div class="i-edit-icon" id="edit-language"></div>
                     </div>
-                    <div class="info">
+                    <div class="info" id="creation-date-container">
                         <p class="i-title">Création :</p>
                         <p class="value" id="creation-date">00.00.00.00</p>
                     </div>
@@ -109,6 +111,8 @@
                 document.getElementById("ptool-close").addEventListener("click", function(){ p.ClosePictureEditMode();});
 
                 document.getElementById("delete-button").addEventListener("click", function(){ p.DeleteAccount()})
+
+                document.getElementById("edit-username").addEventListener("click", function(){ p.EditUserName() })
             </script>
         </div>
     </section>

@@ -116,9 +116,55 @@ function DeleteAccount() {
     Autenticator.DeleteCurrentAccount();
 }
 
+
+function EditUserName() {
+    if (document.getElementById("username-input").style.display != "block") {
+        document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/arrow_right.svg)";
+        document.getElementById("username").style.display = "none";
+        document.getElementById("username-input").value = document.getElementById("username").innerHTML;
+        document.getElementById("username-input").style.display = "block";
+        document.getElementById("edit-username").id = "edit-username";
+        document.getElementById("edit-username").addEventListener("click", function() {
+            document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/loading.svg)";
+            const name = document.getElementById("username-input").value;
+            document.getElementById("username").style.display = "block";
+            document.getElementById("username-input").style.display = "none";
+            if(!Autenticator.UsernameExist(name)){
+                Autenticator.ChangeCurrentUserName(name)
+                                .then(() => {
+                                    document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/done.svg)";
+                                    Autenticator.getCurrentUser()
+                                        .then((user) => {
+                                            UpdateInfos(user);
+                                        })
+                                    setTimeout(() => {
+                                        document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/edit.svg)";
+                                    }, 4000);
+                                
+                                
+                                })
+                                .catch((err) => {
+                                    document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/close.svg)";
+                                    console.log(err);
+                                })
+                            
+            }else{
+                Push.PushUp(2,"This name already exists");
+            }
+
+
+            
+
+
+        })
+    }
+
+}
+
 document.getElementById("ptool-upload").onchange = function() {
     document.getElementsByClassName("ptool-upload-label")[0].style.backgroundImage = "url(../ressources/img/icon/loading.svg)";
     var fileList = document.getElementById("ptool-upload").files;
+
     Autenticator.SaveImage(fileList[0]).then((res) => {
             document.getElementsByClassName("ptool-upload-label")[0].style.backgroundImage = "url(../ressources/img/icon/done.svg)";
             Autenticator.getCurrentUser().then((user) => {
@@ -137,4 +183,4 @@ setTimeout(() => {
     Load();
 }, 200);
 
-export { OpenPictureEditMode, ClosePictureEditMode, DownloadUserProfilePicture, SetMinecraftPicture, DeleteAccount };
+export { EditUserName, OpenPictureEditMode, ClosePictureEditMode, DownloadUserProfilePicture, SetMinecraftPicture, DeleteAccount };

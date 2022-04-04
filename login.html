@@ -58,7 +58,6 @@
             document.getElementById("formsend").addEventListener('click', function(){ Authenticator.LogIn(document.getElementById("email").value, document.getElementById("password").value); });
             document.getElementById("google").addEventListener('click',function(){ Authenticator.LogInWithGoogle()});
             document.getElementById("microsoft").addEventListener('click',function(){ Push.PushUp(1,"Microsoft login is not available yet "/*TODO: add microsoft connexion here*/)});
-             Authenticator.getCurrentUser();
         </script>
         <div class="register_link">
             <p>Do you need an account ?</p>
