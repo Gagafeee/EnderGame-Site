@@ -52,7 +52,7 @@
         </div>
         <script type="module">
             import * as Authenticator from "./js/autenticator.js"; document.getElementById("formsend").addEventListener('click', function(){ Authenticator.CreateAccount(document.getElementById("email").value, document.getElementById("password").value); }); document.getElementById("google").addEventListener('click',function(){
-            Authenticator.CreateAccountWithGoogle()}); Authenticator.getCurrentUser();
+            Authenticator.CreateAccountWithGoogle()});
         </script>
         <div class="login_link">
             <p>Do you want to connect to your account ?</p>

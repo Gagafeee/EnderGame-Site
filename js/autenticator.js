@@ -365,24 +365,24 @@ function userIsDisabled(uid) {
 function getCurrentUser() {
     return new Promise((resolve, reject) => {
         if (isUserLogged()) {
-                if (!userIsDisabled(readCookie('uid'))) {
-                    const dbRef = ref(getDatabase());
-                    get(child(dbRef, `users/${readCookie('uid')}`)).then((snapshot) => {
-                        if (snapshot.exists()) {
-                            resolve(snapshot.val());
-                        } else {
-                            console.log("No data available");
-                            reject("no-data");
-                        }
-                    }).catch((error) => {
-                        console.error(error);
-                    });
-                } else {
-                    console.log("User Disabled");
-                    Push.PushUp(3, "Your account has deleted");
-                }
+            if (!userIsDisabled(readCookie('uid'))) {
+                const dbRef = ref(getDatabase());
+                get(child(dbRef, `users/${readCookie('uid')}`)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        resolve(snapshot.val());
+                    } else {
+                        console.log("No data available");
+                        reject("no-data");
+                    }
+                }).catch((error) => {
+                    console.error(error);
+                });
+            } else {
+                console.log("User Disabled");
+                Push.PushUp(3, "Your account has deleted");
+            }
 
-            
+
         } else {
             console.warn("User was not logged");
             throw new Error("User-not-logged")
@@ -390,6 +390,25 @@ function getCurrentUser() {
     });
 }
 
+
+function getAllusers() {
+
+    return new Promise((resolve, reject) => {
+        const dbRef = ref(getDatabase());
+        let Users = [0];
+        Users.pop();
+        get(child(dbRef, `users/`)).then((snapshot) => {
+            snapshot.forEach((user) => {
+                Users.push(user.val());
+                resolve(Users);
+            })
+        }).catch((error) => {
+            console.error(error);
+            reject(error);
+        });
+    })
+
+}
 
 //----------------------------------------------------------------
 function Disconnect() {
@@ -442,14 +461,14 @@ function ChangeCurrentUserName(username) {
         getCurrentUser()
             .then((user) => {
                 update(ref(database, 'users/' + user.uid), {
-                    name: username
-                })
-                .then((user) => {
-                    resolve(user);
-                })
-                .catch((err) => {
-                    reject(err);
-                })
+                        name: username
+                    })
+                    .then((user) => {
+                        resolve(user);
+                    })
+                    .catch((err) => {
+                        reject(err);
+                    })
             })
     })
 
@@ -503,4 +522,4 @@ function eraseCookie(name) {
 
 
 
-export { ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
+export { getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
