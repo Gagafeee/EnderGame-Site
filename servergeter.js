@@ -36,7 +36,7 @@ function UpdateStatue() {
              }
 
      }*/
-    MinecraftAPI.getServerStatus('http://node02.myhoster.fr', { /*port: 25567 /* optional, only if you need a custom port*/ },
+    MinecraftAPI.getServerStatus('http://node02.myhoster.fr', { port: 25567 /* optional, only if you need a custom port*/ },
         function(err, status) {
             console.log(status);
             if (err) {

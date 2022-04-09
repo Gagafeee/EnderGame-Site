@@ -11,59 +11,8 @@
 </head>
 
 <body>
-    <!-- Three.js library -->
-    <script src="https://threejs.org/build/three.min.js"></script>
-    <!-- GLTFLoader.js source -->
-    <script src="https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js"></script>
-    <script>
-        const renderer = new THREE.WebGLRenderer();
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-        const scene = new THREE.Scene();
-        let Mesh;
-        let light;
 
-        function init() {
-            scene.background = new THREE.Color('black');
-            camera.position.set(0, 10, 25);
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            document.body.appendChild(renderer.domElement);
-        }
-
-        function setLight() {
-            light = new THREE.AmbientLight(0xffffff); // soft white light
-            scene.add(light);
-        }
-
-        function loadGLTF() {
-            const gltfLoader = new GLTFLoader();
-            const url = 'ressources/map/map.glb';
-            gltfLoader.load(url, (gltf) => {
-                const root = gltf.scene;
-                scene.add(root);
-            });
-        }
-        //const controls = new THREE.OrbitControls(camera, renderer.domElement);
-
-        //controls.update() must be called after any manual changes to the camera's transform
-        camera.position.set(0, 20, 100);
-        //controls.update();
-
-        function animate() {
-
-            requestAnimationFrame(animate);
-
-            // required if controls.enableDamping or controls.autoRotate are set to true
-            //controls.update();
-
-            renderer.render(scene, camera);
-
-        }
-
-        init();
-        setLight();
-        loadGLTF();
-        animate();
-    </script>
+    <script type="module" src="island.js"></script>
 </body>
 
 </html>

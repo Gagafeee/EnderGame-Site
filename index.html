@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="dephault.css" type="text/css">
     <link rel="stylesheet" href="menu.css" type="text/css"></link>
+    <link rel="stylesheet" href="index.css"></link>
     <script src='js/jquery-3.6.0.min.js'></script>
 
 
@@ -31,8 +32,22 @@
         </script>
     </header>
 
+    <section class="return_panel" id="return_panel"></section>
+    <script>
+        $("#return_panel").load("../ressources/module/push/push-module.html")
+    </script>
+    <section id="reAuthModule"></section>
 
-
+    <div class="title-content">
+        <div class="image"></div>
+        <p class="text">L'histoire a déjà commencé</p>
+    </div>
+        <div class="island">
+            <script type="module" src="island.js"></script>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed diam nonumy</p>
+            <div id="island"></div>
+        </div>
+    
 
 </body>
 
