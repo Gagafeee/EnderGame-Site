@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 .theme-dark {
     --background-color: #24282B;
+    --background-color-transparent: #24282bc8;
     --background-color-second: #2e3438;
     --background-color-second-white: #495156;
     --background-color-third: #18191b;
     --background-color-white: #777777;
-    --valid: #6fd057;
+    --valid: #58b740;
     --unvalid: #BD3535;
     --text-color: #FFFFFF;
     --statue-getting: #494949;
@@ -13,6 +14,7 @@
     --statue-offline: #BD3535;
     --purple: #8d10d0;
     --blue: #1a31c9;
+    --discord: #5966F2;
     --face-icon: url(../ressources/img/icon/emoji.svg);
     --leave-icon: url(../ressources/img/icon/leave.svg);
     --edit-icon: url(../ressources/img/icon/edit.svg);

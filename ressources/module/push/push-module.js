@@ -1,4 +1,4 @@
-function PushUp(type, message) {
+function PushUp(type, message, delay) {
     var panel = document.getElementById("push-hide");
     if (panel == null) {
         panel = document.getElementById("push");
@@ -31,7 +31,11 @@ function PushUp(type, message) {
     }
     content.innerHTML = message;
     panel.id = "push";
-    console.log("pushing");
+    if(delay){
+        setTimeout(() => {
+            closePanel();
+        }, (delay*1000));
+    }
 }
 
 function closePanel() {

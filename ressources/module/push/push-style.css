@@ -45,7 +45,7 @@
 #push-closing {
     height: 8vh;
     max-width: 97vw;
-    position: absolute;
+    position: fixed;
     bottom: 5vh;
     left: 50%;
     transform: translateX(-50%);
@@ -63,7 +63,7 @@
 #push {
     height: 8vh;
     max-width: 97vw;
-    position: absolute;
+    position: fixed;
     bottom: 5vh;
     left: 50%;
     transform: translateX(-50%);
