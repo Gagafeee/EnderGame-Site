@@ -297,7 +297,7 @@ input[type="file"] {
     box-shadow: none;
     cursor: pointer;
     transition: all 0.5s;
-    
+    text-decoration-color: #ffffff00;
 }
 #page #Account .infos-switcher .nav .button:hover {
     transform: translateY(-5px);
@@ -344,6 +344,14 @@ input[type="file"] {
 #page #Account .infos-switcher .action {
     width: 100%;
     height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#page #Account .infos-switcher .stats {
+    width: 100%;
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: space-around;

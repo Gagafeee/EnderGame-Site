@@ -80,6 +80,15 @@ a {
     animation: spin 1.5s linear infinite;
 }
 
+.loading {
+    width: 2vw;
+    height: 2vw;
+    background-image: url(../ressources/img/icon/loading.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

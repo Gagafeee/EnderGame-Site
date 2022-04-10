@@ -54,6 +54,7 @@ function UpdateInfos(User) {
             ICreationDate.innerHTML = result.creationTime;
             //load picture
             if (result.hasCustomPP == true) {
+                UserPicture.style.backgroundImage = "url(../ressources/img/icon/loading.svg)"
                 Autenticator.GetUserProfilePicture(result.uid).then((url) => {
                     UserPicture.style.backgroundImage = "url(" + url + ")";
                 })
