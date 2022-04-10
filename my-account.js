@@ -5,6 +5,8 @@ import * as Umanager from "../js/usermanager.js";
 function Load() {
     //instencing all components
     const Loader = document.getElementById("loader");
+    ChangeContent("user-infos");
+    document.getElementById("ISw-info-button").className = "button-selected";
 
     Autenticator.getCurrentUser()
         .then((response) => {
@@ -129,37 +131,86 @@ function EditUserName() {
             const name = document.getElementById("username-input").value;
             document.getElementById("username").style.display = "block";
             document.getElementById("username-input").style.display = "none";
-            if(!Autenticator.UsernameExist(name)){
+            if (!Autenticator.UsernameExist(name)) {
                 Autenticator.ChangeCurrentUserName(name)
-                                .then(() => {
-                                    document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/done.svg)";
-                                    Autenticator.getCurrentUser()
-                                        .then((user) => {
-                                            UpdateInfos(user);
-                                        })
-                                    setTimeout(() => {
-                                        document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/edit.svg)";
-                                    }, 4000);
-                                
-                                
-                                })
-                                .catch((err) => {
-                                    document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/close.svg)";
-                                    console.log(err);
-                                })
-                            
-            }else{
-                Push.PushUp(2,"This name already exists");
+                    .then(() => {
+                        document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/done.svg)";
+                        Autenticator.getCurrentUser()
+                            .then((user) => {
+                                UpdateInfos(user);
+                            })
+                        setTimeout(() => {
+                            document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/edit.svg)";
+                        }, 4000);
+
+
+                    })
+                    .catch((err) => {
+                        document.getElementById("edit-username").style.backgroundImage = "url(../ressources/img/icon/close.svg)";
+                        console.log(err);
+                    })
+
+            } else {
+                Push.PushUp(2, "This name already exists");
             }
 
 
-            
+
 
 
         })
     }
 
 }
+
+function ChangeContent(id) {
+    const InfosPanel = document.getElementById("user-infos");
+    const ActionPanel = document.getElementById("actions");
+    const StatPanel = document.getElementById("stats");
+    switch (id) {
+        case "user-infos":
+            {
+                InfosPanel.style.display = "flex";
+                ActionPanel.style.display = "none";
+                StatPanel.style.display = "none";
+                break;
+            }
+        case "action":
+            {
+                InfosPanel.style.display = "none";
+                ActionPanel.style.display = "flex";
+                StatPanel.style.display = "none";
+                break;
+            }
+        case "stats":
+            {
+                InfosPanel.style.display = "none";
+                ActionPanel.style.display = "none";
+                StatPanel.style.display = "flex";
+                break;
+            }
+    }
+}
+document.getElementById("ISw-info-button").addEventListener("click", () => {
+    ChangeContent("user-infos");
+    document.getElementById("ISw-info-button").className = "button-selected";
+    document.getElementById("ISw-action-button").className = "button";
+    document.getElementById("ISw-stats-button").className = "button";
+})
+document.getElementById("ISw-action-button").addEventListener("click", () => {
+    ChangeContent("action");
+    document.getElementById("ISw-info-button").className = "button";
+    document.getElementById("ISw-action-button").className = "button-selected";
+    document.getElementById("ISw-stats-button").className = "button";
+})
+document.getElementById("ISw-stats-button").addEventListener("click", () => {
+    ChangeContent("stats");
+    document.getElementById("ISw-info-button").className = "button";
+    document.getElementById("ISw-stats-button").className = "button-selected";
+    document.getElementById("ISw-action-button").className = "button";
+})
+
+
 
 document.getElementById("ptool-upload").onchange = function() {
     document.getElementsByClassName("ptool-upload-label")[0].style.backgroundImage = "url(../ressources/img/icon/loading.svg)";

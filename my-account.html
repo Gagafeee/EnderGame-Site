@@ -33,86 +33,102 @@
 
     <section id="page">
         <div id="Account">
-            <div id="profile-picture" class="normal">
-                <div id="picture-edit"></div>
+            <div class="card">
+                <div id="profile-picture" class="normal">
+                    <div id="picture-edit"></div>
 
-                <div id="picture"></div>
-                <div id="picture-tool">
-                    <div id="ptool-download" class="ptool-button" style="background-image: url(../ressources/img/icon/download.svg);">
-                        <div class="ptool-text">
-                            <p>Download Image</p>
+                    <div id="picture"></div>
+                    <div id="picture-tool">
+                        <div id="ptool-download" class="ptool-button" style="background-image: url(../ressources/img/icon/download.svg);">
+                            <div class="ptool-text">
+                                <p>Download Image</p>
+                            </div>
                         </div>
-                    </div>
-                    <label class="ptool-upload-label" for="ptool-upload" style="background-image: url(../ressources/img/icon/upload.svg);">
+                        <label class="ptool-upload-label" for="ptool-upload" style="background-image: url(../ressources/img/icon/upload.svg);">
                         <div class="ptool-text">
                             <p>Upload Image</p>
                         </div>
                     </label>
-                    <input type="file" id="ptool-upload" class="ptool-button" accept="image/*" >
-                    
-                    </input>
-                    <div id="ptool-mcSet" class="ptool-button" style="background-image: url(../ressources/img/icon/steve.png);">
-                        <div class="ptool-text">
-                            <p>Use Minecraft skin</p>
-                            <div id="ptool-text-input-container">
-                                <input type="text" id="ptool-text-input" placeholder="Minecraft Pseudo"></input>
-                                <div id="ptool-text-input-closebutton"></div>
+                        <input type="file" id="ptool-upload" class="ptool-button" accept="image/*">
+
+                        </input>
+                        <div id="ptool-mcSet" class="ptool-button" style="background-image: url(../ressources/img/icon/steve.png);">
+                            <div class="ptool-text">
+                                <p>Use Minecraft skin</p>
+                                <div id="ptool-text-input-container">
+                                    <input type="text" id="ptool-text-input" placeholder="Minecraft Pseudo"></input>
+                                    <div id="ptool-text-input-closebutton"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="ptool-close" class="ptool-button" style="background-image: url(../ressources/img/icon/close.svg);">
+                            <div class="ptool-text">
+                                <p>Close</p>
                             </div>
                         </div>
                     </div>
-                    <div id="ptool-close" class="ptool-button" style="background-image: url(../ressources/img/icon/close.svg);">
-                        <div class="ptool-text">
-                            <p>Close</p>
+                    <div id="ptool-arrow"></div>
+
+
+                </div>
+                <p class="title" id="userName">UserName</p>
+            </div>
+            <div class="infos-switcher">
+                <div class="nav">
+                    <div class="button" id="ISw-info-button">
+                        <p>Mes Informations</p>
+                    </div>
+                    <div class="button" id="ISw-stats-button">
+                        <p>Mes Statistiques</p>
+                    </div>
+                    <div class="button" id="ISw-action-button">
+                        <p>Actions</p>
+                    </div>
+                </div>
+                <div class="content">
+
+                    <div class="infos" id="user-infos">
+                        <div class="content">
+                            <div class="info">
+                                <p class="i-title">Email :</p>
+                                <p class="value" id="email">xx@y.com</p>
+                                <input type="text" id="email-input"></input>
+                                <div class="i-edit-icon" id="edit-email"></div>
+                            </div>
+                            <div class="info">
+                                <p class="i-title">Pseudo :</p>
+                                <p class="value" id="username">UNAME</p>
+                                <input type="text" id="username-input" placeholder="Username"></input>
+                                <div class="i-edit-icon" id="edit-username"></div>
+                            </div>
+                        </div>
+                        <div class="content">
+                            <div class="info">
+                                <p class="i-title">Language :</p>
+                                <p class="value" id="language">CT-VA</p>
+                                <div class="i-edit-icon" id="edit-language"></div>
+                            </div>
+                            <div class="info" id="creation-date-container">
+                                <p class="i-title">Création :</p>
+                                <p class="value" id="creation-date">00.00.00.00</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div id="ptool-arrow"></div>
-                
-                
-            </div>
-            <p class="title" id="userName">UserName</p>
-            <div class="infos">
-                <div class="content">
-                    <div class="info">
-                        <p class="i-title">Email :</p>
-                        <p class="value" id="email">xx@y.com</p>
-                        <input type="text" id="email-input"></input>
-                        <div class="i-edit-icon" id="edit-email"></div>
+                    <div class="action" id="actions">
+                        <div id="delete-button">
+                            <p>Supprimer mon compte</p>
+                        </div>
                     </div>
-                    <div class="info">
-                        <p class="i-title">Pseudo :</p>
-                        <p class="value" id="username">UNAME</p>
-                        <input type="text" id="username-input" placeholder="Username"></input>
-                        <div class="i-edit-icon" id="edit-username"></div>
-                    </div>
-                </div>
-                <div class="content">
-                    <div class="info">
-                        <p class="i-title">Language :</p>
-                        <p class="value" id="language">CT-VA</p>
-                        <div class="i-edit-icon" id="edit-language"></div>
-                    </div>
-                    <div class="info" id="creation-date-container">
-                        <p class="i-title">Création :</p>
-                        <p class="value" id="creation-date">00.00.00.00</p>
+                    <div class="stats" id="stats">
+                        <p>stats</p>
                     </div>
                 </div>
             </div>
-            <div class="action-container">
-                <div id="delete-button"><p>Supprimer mon compte</p></div>
-            </div>
+
             <script type="module">
-                import * as p from "./my-account.js";
-                document.getElementById("picture-edit").addEventListener("click", function(){ p.OpenPictureEditMode(); });
-
-                document.getElementById("ptool-download").addEventListener("click", function(){ p.DownloadUserProfilePicture()})
-                /*upload is in my-account.js*/
-                document.getElementById("ptool-text-input-closebutton").addEventListener("click", function(){ p.SetMinecraftPicture(); });
-                document.getElementById("ptool-close").addEventListener("click", function(){ p.ClosePictureEditMode();});
-
-                document.getElementById("delete-button").addEventListener("click", function(){ p.DeleteAccount()})
-
-                document.getElementById("edit-username").addEventListener("click", function(){ p.EditUserName() })
+                import * as p from "./my-account.js"; document.getElementById("picture-edit").addEventListener("click", function(){ p.OpenPictureEditMode(); }); document.getElementById("ptool-download").addEventListener("click", function(){ p.DownloadUserProfilePicture()})
+                /*'upload' is in my-account.js*/ document.getElementById("ptool-text-input-closebutton").addEventListener("click", function(){ p.SetMinecraftPicture(); }); document.getElementById("ptool-close").addEventListener("click", function(){ p.ClosePictureEditMode();});
+                document.getElementById("delete-button").addEventListener("click", function(){ p.DeleteAccount()}); document.getElementById("edit-username").addEventListener("click", function(){ p.EditUserName() });
             </script>
         </div>
     </section>

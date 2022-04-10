@@ -2,18 +2,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    margin: 0;
+    height: 88vh;
 }
 
 #page #Account {
-    width: 60%;
-    min-height: 80vh;
+    width: 70%;
+    min-height: 85vh;
     border-radius: 20px;
     background-color: var(--background-color-second);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
+/*-----------------------------------------------------------------*/
 #page #Account #profile-picture[class="normal"] {
     margin-top: 2vh;
     width: 10vw;
@@ -248,22 +250,109 @@ input[type="file"] {
     left: 0;
     border-radius: 40%;
 }
-
-#page #Account .title {
-    font-size: 2.2vw;
-    font-weight: 700;
-    margin-top: 5px;
-}
-
-#page #Account .infos {
-    background-color: var(--background-color);
-    width: 95%;
-    height: 57%;
-    border-radius: 20px;
+#page #Account .card {
+    margin-bottom: 1.5vh;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+
+#page #Account .title {
+    font-size: 2.2vw;
+    font-weight: 700;
+    margin: 0;
+    margin-top: 5px;
+}
+/*-----------------------------------------------------------------*/
+#page #Account .infos-switcher {
+    display: block;
+    width: 95%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#page #Account .infos-switcher .content {
+    width: 100%;
+    height: 100%;
+    background-color: var(--background-color);
+    border-radius: 20px;
+}
+#page #Account .infos-switcher .nav {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#page #Account .infos-switcher .nav .button {
+    width: 15%;
+    margin: 0 1vw 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    cursor: pointer;
+    transition: all 0.5s;
+    
+}
+#page #Account .infos-switcher .nav .button:hover {
+    transform: translateY(-5px);
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+}
+
+#page #Account .infos-switcher .nav .button-selected {
+    width: 15%;
+    margin: 0 1vw 0 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: none;
+    transform: translateY(-5px);
+}
+
+#page #Account .infos-switcher .nav .button-selected p {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1vw;
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+}
+
+#page #Account .infos-switcher .nav .button p {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1vw;
+}
+
+
+
+#page #Account .infos-switcher .infos {
+    
+    width: 100%;
+    height: 100%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#page #Account .infos-switcher .action {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/*-----------------------------------------------------------------*/
+
+
+
 
 #page #Account .infos .content {
     width: 100%;
@@ -334,16 +423,9 @@ input[type="file"] {
 
 /*---------------------------------------------------*/
 
-#page #Account .action-container {
-    margin-top: 7vh;
-    width: 100%;
-    height: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-}
 
-#page #Account .action-container #delete-button {
+
+#page #Account .action #delete-button {
     width: 25%;
     background-color: #dc110129;
     border: 2px solid #f10606cf;
@@ -353,16 +435,16 @@ input[type="file"] {
     transition: all 0.5s;
 }
 
-#page #Account .action-container #delete-button p {
+#page #Account .action #delete-button p {
     text-align: center;
     font-weight: 600;
     transition: all 0.5s;
 }
 
-#page #Account .action-container #delete-button:hover {
+#page #Account .action #delete-button:hover {
     transform: scale(0.9);
 }
 
-#page #Account .action-container #delete-button:hover p {
+#page #Account .action #delete-button:hover p {
     color: red;
 }
