@@ -15,7 +15,10 @@
     flex-direction: column;
     align-items: center;
 }
+
+
 /*-----------------------------------------------------------------*/
+
 #page #Account #profile-picture[class="normal"] {
     margin-top: 2vh;
     width: 10vw;
@@ -250,6 +253,7 @@ input[type="file"] {
     left: 0;
     border-radius: 40%;
 }
+
 #page #Account .card {
     margin-bottom: 1.5vh;
     display: flex;
@@ -257,14 +261,16 @@ input[type="file"] {
     align-items: center;
 }
 
-
 #page #Account .title {
     font-size: 2.2vw;
     font-weight: 700;
     margin: 0;
     margin-top: 5px;
 }
+
+
 /*-----------------------------------------------------------------*/
+
 #page #Account .infos-switcher {
     display: block;
     width: 95%;
@@ -274,12 +280,14 @@ input[type="file"] {
     align-items: center;
     justify-content: center;
 }
+
 #page #Account .infos-switcher .content {
     width: 100%;
     height: 100%;
     background-color: var(--background-color);
     border-radius: 20px;
 }
+
 #page #Account .infos-switcher .nav {
     width: 100%;
     height: 20%;
@@ -299,6 +307,7 @@ input[type="file"] {
     transition: all 0.5s;
     text-decoration-color: #ffffff00;
 }
+
 #page #Account .infos-switcher .nav .button:hover {
     transform: translateY(-5px);
     text-decoration: underline;
@@ -329,13 +338,9 @@ input[type="file"] {
     font-size: 1vw;
 }
 
-
-
 #page #Account .infos-switcher .infos {
-    
     width: 100%;
     height: 100%;
-    
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -357,12 +362,10 @@ input[type="file"] {
     justify-content: space-around;
 }
 
+
 /*-----------------------------------------------------------------*/
 
-
-
-
-#page #Account .infos .content {
+#page #Account .infos-switcher .infos .content {
     width: 100%;
     height: 30%;
     display: flex;
@@ -371,7 +374,23 @@ input[type="file"] {
     margin: 20px 0 20px 0;
 }
 
-#page #Account .infos .content .info {
+#page #Account .infos-switcher .infos .tags-container {
+    background-color: var(--background-color-second);
+    width: 90%;
+    height: 90%;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#page #Account .infos-switcher .infos .tags-container .tag {
+    height: 40%;
+    min-width: 10%;
+    word-break: keep-all;
+}
+
+#page #Account .infos-switcher .infos .content .info {
     background-color: var(--background-color-second);
     width: 45%;
     height: 70%;
@@ -381,7 +400,7 @@ input[type="file"] {
     justify-content: space-between;
 }
 
-#page #Account .infos .content .info input {
+#page #Account .infos-switcher .infos .content .info input {
     display: none;
     height: 4vh;
     width: 50%;
@@ -391,47 +410,45 @@ input[type="file"] {
     color: var(--text-color)
 }
 
-#page #Account .infos .content .info[id="creation-date-container"] {
+#page #Account .infos-switcher .infos .content .info[id="creation-date-container"] {
     width: 50%;
 }
 
-#page #Account .infos .content .info[id="creation-date-container"] .value {
+#page #Account .infos-switcher .infos .content .info[id="creation-date-container"] .value {
     margin-right: 10px;
 }
 
-#page #Account .infos .info .i-title {
+#page #Account .infos-switcher .infos .info .i-title {
     font-weight: 600;
     font-size: 1.5vw;
     margin-left: 10px;
 }
 
-#page #Account .infos .info .value {
+#page #Account .infos-switcher .infos .info .value {
     font-weight: 500;
     font-size: 1.3vw;
 }
 
-#page #Account .infos .info .i-edit-icon {
+#page #Account .infos-switcher .infos .info .i-edit-icon {
     background-color: var(--background-color-white);
     background-image: var(--edit-icon);
     background-position: center;
     background-repeat: no-repeat;
     background-size: 2vw;
-    height: 8.7vh;
+    height: 100%;
     width: 15%;
     border-radius: 0 20px 20px 0;
     transition: all 0.5s;
     float: left;
 }
 
-#page #Account .infos .info .i-edit-icon:hover {
+#page #Account .infos-switcher .infos .info .i-edit-icon:hover {
     transform: translateX(10px);
     background-color: var(--valid);
 }
 
 
 /*---------------------------------------------------*/
-
-
 
 #page #Account .action #delete-button {
     width: 25%;

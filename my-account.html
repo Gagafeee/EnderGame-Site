@@ -113,6 +113,40 @@
                                 <p class="value" id="creation-date">00.00.00.00</p>
                             </div>
                         </div>
+                        <div class="content">
+                            <div class="tags-container" id="tags-container">
+                                <!--<div class="tag"><p>Admin</p></div>-->
+                            </div>
+                            <script type="module">
+                                import * as TagManager from "./js/tagsManager.js";
+                                const Container = document.getElementById("tags-container");
+                                TagManager.GetCurrentUserTags()
+                                .then((tags) => {
+                                    if(tags != null) {
+                                       Object.entries(tags).forEach(([tag, value]) => {
+                                        console.log(tag);
+                                        const Tag = document.createElement("div");
+                                        Tag.className = "tag";
+                                        Tag.style.backgroundColor = "var(--" + tag +"-bg-color)";
+                                        Tag.style.borderColor = "var(--" + tag +"-color)";
+                                        const TagValue = document.createElement("p");
+                                        TagValue.innerHTML = tag;
+                                        Tag.appendChild(TagValue);
+                                        Container.appendChild(Tag);
+                                    }) 
+                                    }else{
+ 
+                                        const t = document.createElement("p");
+                                        t.innerHTML = "You don't have tags";
+                                        Container.appendChild(t);
+                                    
+                                    }
+                                    
+                                    
+                                })
+                            </script>
+                        </div>
+
                     </div>
                     <div class="action" id="actions">
                         <div id="delete-button">

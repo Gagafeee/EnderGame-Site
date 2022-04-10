@@ -45,7 +45,8 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
                     uid: user.uid,
                     lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
                     creationTime: user.metadata.creationTime,
-                    hasCustomPP: false
+                    hasCustomPP: false,
+                    permisionLevel: 0
                 });
                 document.cookie = "uid=" + user.uid; + ";";
                 Push.PushUp(0, "Created Succifully");
@@ -97,7 +98,8 @@ function CreateAccountWithPopup(auth, provider) {
                 uid: user.uid,
                 lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
                 creationTime: user.metadata.creationTime,
-                hasCustomPP: false
+                hasCustomPP: false,
+                permisionLevel: 0
             });
             document.cookie = "uid=" + user.uid; + ";";
             Push.PushUp(0, "Created Succifully");
@@ -498,6 +500,21 @@ function DeleteCurrentAccount() {
         })
 }
 //----------------------------------------------------------------
+function Addtag(tagName){
+    getCurrentUser()
+    .then((user) => {
+        if(user.permisionLevel > 0){
+
+             set(ref(database, 'users/' + user.uid + "/tags"), {
+                 [tagName]: true
+             })
+        }else {
+            console.warn("User has no permision");
+            return false;
+        }
+    })
+}
+//----------------------------------------------------------------
 
 function readCookie(name) {
     var nameEQ = name + "=";
@@ -522,4 +539,4 @@ function eraseCookie(name) {
 
 
 
-export { getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
+export { Addtag, getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };

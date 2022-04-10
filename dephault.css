@@ -22,10 +22,36 @@
     --profile-favorite: url(../ressources/img/icon/profile_favorite.svg)
 }
 
-body {
+.tags-container {
+    --df-color: #656565;
+    --df-bg-color: #65656590;
+
+    --admin-color: #71368A;
+    --admin-bg-color: #71368A90;
+}
+
+.tags-container .tag {
+    background-color: var(--df-bg-color);
+    border-radius: 15px;
+    border: 3px solid var(--df-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+}
+
+.tags-container .tag p {
+    font-weight: 500;
+    font-size: 1vw;
+}
+
+body,
+html {
     background-color: var(--background-color);
     margin: 0;
     padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
 p,
