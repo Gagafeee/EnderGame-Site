@@ -17,6 +17,7 @@
     <script src='js/jquery-3.6.0.min.js'></script>
 
 
+
 </head>
 
 <body class="theme-dark">
@@ -43,29 +44,28 @@
         <p class="text">L'histoire a déjà commencé</p>
     </div>
     <div class="play-container">
-            <p>Vous voulez jouer</p>
-            <div class="play-button-container">
-                <div class="button" id="play">
-                    <p>Jouer</p>
-                </div>
-                <div class="button" id="discord" onclick="window.open('https://discord.gg/AhGVjhNmHP')">
-                    <div class="discord-icon"></div>
-                    <p>Discord</p>
-                </div>
+        <p>Vous voulez jouer</p>
+        <div class="play-button-container">
+            <div class="button" id="play">
+                <p>Jouer</p>
+            </div>
+            <div class="button" id="discord" onclick="window.open('https://discord.gg/AhGVjhNmHP')">
+                <div class="discord-icon"></div>
+                <p>Discord</p>
             </div>
         </div>
-    <script type="module" src="./node_modules/three/build/three.js"></script>
+    </div>
     <div class="island">
         <script type="module" src="island.js"></script>
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed diam nonumy</p>
         <div id="island"></div>
     </div>
-    
+
     <div id="ip-panel" class="hide">
         <div id="link">
             <div class="cross"></div>
         </div>
-        <div class="container" >
+        <div class="container">
             <p class="title">Jouer :</p>
             <div class="img-container">
                 <div class="img"></div>
@@ -77,16 +77,8 @@
     </div>
     <script type="module">
         import * as w from './text-typing-animation.js';
-        document.getElementById("link").addEventListener("click",function(){
-            document.getElementById("ip-panel").className = "hide"
-
-        })
-        document.getElementById("play").addEventListener("click",function(){
-            document.getElementById("ip-panel").className = "show";
-            setTimeout(() => {
-                w.wordflick(true);
-            }, 1000); 
-        })
+        document.getElementById("link").addEventListener("click",function(){ document.getElementById("ip-panel").className = "hide" });
+         document.getElementById("play").addEventListener("click",function(){ document.getElementById("ip-panel").className = "show"; setTimeout(() => { w.wordflick(true); }, 1000); })
     </script>
 
 

@@ -1,4 +1,4 @@
-import "./node_modules/three/build/three.js";
+import "https://threejs.org/build/three.min.js";
 import "https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/controls/OrbitControls.js";
 import "https://cdn.rawgit.com/mrdoob/three.js/master/examples/js/loaders/GLTFLoader.js";
 
