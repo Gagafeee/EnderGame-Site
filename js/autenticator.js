@@ -360,6 +360,9 @@ function userIsDisabled(uid) {
         }
     }).catch((error) => {
         console.error(error);
+        if (error == "Error: Client is offline.") {
+            Push.PushUp(2, "Your connection is weak or slow")
+        }
     });
 }
 
@@ -500,19 +503,19 @@ function DeleteCurrentAccount() {
         })
 }
 //----------------------------------------------------------------
-function Addtag(tagName){
+function Addtag(tagName) {
     getCurrentUser()
-    .then((user) => {
-        if(user.permisionLevel > 0){
+        .then((user) => {
+            if (user.permisionLevel > 0) {
 
-             set(ref(database, 'users/' + user.uid + "/tags"), {
-                 [tagName]: true
-             })
-        }else {
-            console.warn("User has no permision");
-            return false;
-        }
-    })
+                set(ref(database, 'users/' + user.uid + "/tags"), {
+                    [tagName]: true
+                })
+            } else {
+                console.warn("User has no permision");
+                return false;
+            }
+        })
 }
 //----------------------------------------------------------------
 
