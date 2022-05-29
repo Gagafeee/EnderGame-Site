@@ -118,7 +118,7 @@ header .content nav .button p {
 
 header .content #connect {
     display: block;
-    width: 20%;
+    width: 25%;
     height: 100%;
 }
 
@@ -136,9 +136,9 @@ header .content #connect .content .icon {
     background-image: url(../ressources/img/icon/user.svg);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    height: 5vh;
-    width: 5vh;
+    background-size: contain;
+    height: 6vh;
+    width: 6vh;
     margin-right: 0.7vw;
     cursor: pointer;
 }
@@ -147,6 +147,21 @@ header .content #connect .content p {
     font-weight: 700;
     font-size: 1.5vw;
     cursor: pointer;
+    margin-right: 3vw;
+}
+
+header .content[data-notif="false"] #connect .content .notification-round {
+    display: none;
+}
+
+header .content[data-notif="true"] #connect .content .notification-round {
+    background-color: var(--red);
+    width: 1vw;
+    height: 1vw;
+    border-radius: 40%;
+    position: relative;
+    top: -15%;
+    right: -80%;
 }
 
 header .content #connect .dropdown {
@@ -189,6 +204,26 @@ header .content #connect .dropdown-open div {
     -webkit-transform: scale(0.90);
     transition: background-color 0.5s;
     transition: transform 0.2s;
+}
+
+header .content[data-notif="false"] #connect .dropdown-open div .notification-round {
+    display: none;
+}
+
+header .content[data-notif="true"] #connect .dropdown-open div .notification-round {
+    background-color: var(--red);
+    width: 2vw;
+    height: 2vw;
+    border-radius: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 3.8vw;
+}
+
+header .content[data-notif="true"] #connect .dropdown-open div .notification-round p {
+    font-weight: 500;
+    font-size: 1.5vw;
 }
 
 header .content #connect .dropdown-open div:nth-child(1):hover {

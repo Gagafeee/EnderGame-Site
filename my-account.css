@@ -271,7 +271,18 @@ input[type="file"] {
 
 /*-----------------------------------------------------------------*/
 
-#page #Account .infos-switcher {
+#page #Account[data-ptoolopen="false"] .infos-switcher {
+    display: block;
+    width: 95%;
+    height: 57vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s;
+}
+
+#page #Account[data-ptoolopen="true"] .infos-switcher {
     display: block;
     width: 95%;
     height: 50vh;
@@ -279,13 +290,15 @@ input[type="file"] {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    transition: all 0.5s;
 }
 
 #page #Account .infos-switcher .content {
     width: 100%;
-    height: 100%;
+    height: 90%;
     background-color: var(--background-color);
     border-radius: 20px;
+    overflow: hidden;
 }
 
 #page #Account .infos-switcher .nav {
@@ -338,12 +351,38 @@ input[type="file"] {
     font-size: 1vw;
 }
 
+#page #Account .infos-switcher .nav .button[id="ISw-notification-button"][data-notif="true"] .notification-round {
+    background-color: var(--red);
+    width: 10px;
+    height: 10px;
+    border-radius: 40%;
+    margin-left: 10px;
+}
+
+#page #Account .infos-switcher .nav .button-selected[id="ISw-notification-button"][data-notif="true"] .notification-round {
+    background-color: var(--red);
+    width: 10px;
+    height: 10px;
+    border-radius: 40%;
+    margin-left: 10px;
+}
+
 #page #Account .infos-switcher .infos {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+#page #Account .infos-switcher .notif {
+    width: 100%;
+    height: 98%;
+    margin-top: 1vh;
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    overflow: scroll;
 }
 
 #page #Account .infos-switcher .action {
@@ -472,4 +511,117 @@ input[type="file"] {
 
 #page #Account .action #delete-button:hover p {
     color: red;
+}
+
+
+/*-----------------------------------------------------*/
+
+#page #Account .notif .notification {
+    width: 97%;
+    height: 9vh;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    margin: 0.5vh 0 0.5vh 0;
+
+}
+#page #Account .notif #notifLoader {
+    position: fixed;
+    top: 65%;
+    left: 50%;
+
+}
+#page #Account .notif .notification .icon {
+    width: 5%;
+    margin-right: 2%;
+    margin-left: 1%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+#page #Account .notif .notification[data-type="alert"] {
+    background-color: #dc800129;
+    border: 2px solid #f18e06cf;
+}
+
+#page #Account .notif .notification[data-type="info"] {
+    background-color: #0849941f;
+    border: 2px solid #062cf175;
+}
+
+#page #Account .notif .notification[data-type="error"] {
+    background-color: #dc110129;
+    border: 2px solid #f10606cf;
+}
+
+#page #Account .notif .notification[data-type="alert"] .icon {
+    background-image: url(./ressources/img/icon/important.svg);
+}
+
+#page #Account .notif .notification[data-type="info"] .icon {
+    background-image: url(./ressources/img/icon/info.svg);
+}
+
+#page #Account .notif .notification[data-type="error"] .icon {
+    background-image: url(./ressources/img/icon/close.svg);
+}
+
+
+
+#page #Account .notif .notification .container {
+    width: 90%;
+    height: 100%;
+}
+
+#page #Account .notif .notification .container .content {
+    background-color: transparent;
+    width: 100%;
+    height: 70%;
+    margin: 0;
+    text-align: center;
+    font-weight: 600;
+    font-size: 2vw ;
+}
+#page #Account .notif .notification .infos {
+    width: 100%;
+    height: 30%;
+    display: block;
+}
+
+#page #Account .notif .notification .infos .date {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 1vw;
+    margin: 0;
+}
+
+#page #Account .notif .notification .valid-button {
+    height: 100%;
+    width: 10%;
+    background-color: var(--valid);
+    border-radius: 0 19px 19px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 3vw;
+    background-image: url(./ressources/img/icon/done.svg);
+    transition: all 0.5s;
+}
+
+#page #Account .notif .notification .valid-button:hover {
+    transform: translateX(10px);
+    background-size: 3.5vw;
+}
+
+#page #Account .notif .notification .disabled-button {
+    height: 100%;
+    width: 10%;
+    border-radius: 0 19px 19px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2vw;
+    background-image: url(./ressources/img/icon/done.svg);
+    transition: all 0.5s;
 }

@@ -1,6 +1,7 @@
 import * as Autenticator from './js/autenticator.js';
 import * as Push from "../ressources/module/push/push-module.js";
 import * as Umanager from "../js/usermanager.js";
+import * as NotificationManager from "../js/notification.js";
 
 function Load() {
     //instencing all components
@@ -64,15 +65,97 @@ function UpdateInfos(User) {
         .catch((error) => {
             console.log(error);
         })
+
+    //Notif
+    RefreshNotifications();
+}
+
+function RefreshNotifications() {
+    //Autenticator.SendNotification("new notif",2)
+    Autenticator.hasNewNotifications()
+        .then((responce) => {
+            console.log(responce);
+        })
+    document.getElementById("notifLoader").style.display = "block";
+    Autenticator.getCurrentUserNotifications()
+        .then((notificationsList) => {
+            const C = document.getElementById("notification");
+            while (C.firstChild) {
+                C.removeChild(C.lastChild);
+            }
+            const loader = document.createElement("div");
+            loader.className = "loading";
+            loader.id = "notifLoader";
+            C.appendChild(loader);
+            for (let i = 0; i < Object.keys(notificationsList).length; i++) {
+                const container = document.createElement("div");
+                container.dataset.id = i;
+                container.className = "notification";
+                switch (notificationsList[i].type) {
+                    case 0:
+                        container.dataset.type = "error";
+                        break;
+
+                    case 1:
+                        container.dataset.type = "alert";
+                        break;
+
+                    case 2:
+                        container.dataset.type = "info";
+                        break;
+                }
+                const Icon = document.createElement("div");
+                    Icon.className = "icon";
+                    container.appendChild(Icon);
+                const Content = document.createElement("div");
+                    Content.className = "container";
+                    const text = document.createElement("p");
+                        text.innerHTML = notificationsList[i].content;
+                        Content.appendChild(text);
+                    const Infos = document.createElement("div");
+                        Infos.className = "infos";
+                        const date = document.createElement("p");
+                            date.className = "date";
+                            date.innerHTML = notificationsList[i].date;
+                        Infos.appendChild(date);
+                        Content.appendChild(Infos);
+                container.appendChild(Content);
+
+                const Button = document.createElement("div");
+                        if(notificationsList[i].hasReaded == false){
+                            Button.className = "valid-button";
+                            Button.addEventListener("click", () =>{
+                                Autenticator.SetNotificationReaded(i);
+                                setTimeout(() =>{
+                                 RefreshNotifications();   
+                                },100)
+                                
+                            })  
+                        }else if(notificationsList[i].hasReaded == true){
+                          Button.className = "disabled-button";  
+                        }
+                        
+                        
+                container.appendChild(Button);
+                C.appendChild(container);
+            }
+            Autenticator.hasNewNotifications()
+                .then((response) => {
+                    document.getElementById("ISw-notification-button").dataset.notif = response.hasNonReadedNotifications;
+                })
+            document.getElementById("notifLoader").style.display = "none";
+        })
 }
 
 function OpenPictureEditMode() {
     const Panel = document.getElementById("profile-picture");
+    document.getElementById("Account").dataset.ptoolopen = "true";
     Panel.className = "edit";
 }
 
 function ClosePictureEditMode() {
     const Panel = document.getElementById("profile-picture");
+    document.getElementById("Account").dataset.ptoolopen = "false";
     Panel.className = "normal";
 }
 
@@ -166,6 +249,7 @@ function EditUserName() {
 
 function ChangeContent(id) {
     const InfosPanel = document.getElementById("user-infos");
+    const NotifPanel = document.getElementById("notification");
     const ActionPanel = document.getElementById("actions");
     const StatPanel = document.getElementById("stats");
     switch (id) {
@@ -174,6 +258,15 @@ function ChangeContent(id) {
                 InfosPanel.style.display = "flex";
                 ActionPanel.style.display = "none";
                 StatPanel.style.display = "none";
+                NotifPanel.style.display = "none";
+                break;
+            }
+        case "notif":
+            {
+                InfosPanel.style.display = "none";
+                ActionPanel.style.display = "none";
+                StatPanel.style.display = "none";
+                NotifPanel.style.display = "flex";
                 break;
             }
         case "action":
@@ -181,6 +274,7 @@ function ChangeContent(id) {
                 InfosPanel.style.display = "none";
                 ActionPanel.style.display = "flex";
                 StatPanel.style.display = "none";
+                NotifPanel.style.display = "none";
                 break;
             }
         case "stats":
@@ -188,6 +282,7 @@ function ChangeContent(id) {
                 InfosPanel.style.display = "none";
                 ActionPanel.style.display = "none";
                 StatPanel.style.display = "flex";
+                NotifPanel.style.display = "none";
                 break;
             }
     }
@@ -197,18 +292,29 @@ document.getElementById("ISw-info-button").addEventListener("click", () => {
     document.getElementById("ISw-info-button").className = "button-selected";
     document.getElementById("ISw-action-button").className = "button";
     document.getElementById("ISw-stats-button").className = "button";
+    document.getElementById("ISw-notification-button").className = "button";
+})
+document.getElementById("ISw-notification-button").addEventListener("click", () => {
+    ChangeContent("notif");
+    RefreshNotifications();
+    document.getElementById("ISw-info-button").className = "button";
+    document.getElementById("ISw-stats-button").className = "button";
+    document.getElementById("ISw-action-button").className = "button";
+    document.getElementById("ISw-notification-button").className = "button-selected";
 })
 document.getElementById("ISw-action-button").addEventListener("click", () => {
     ChangeContent("action");
     document.getElementById("ISw-info-button").className = "button";
     document.getElementById("ISw-action-button").className = "button-selected";
     document.getElementById("ISw-stats-button").className = "button";
+    document.getElementById("ISw-notification-button").className = "button";
 })
 document.getElementById("ISw-stats-button").addEventListener("click", () => {
     ChangeContent("stats");
     document.getElementById("ISw-info-button").className = "button";
     document.getElementById("ISw-stats-button").className = "button-selected";
     document.getElementById("ISw-action-button").className = "button";
+    document.getElementById("ISw-notification-button").className = "button";
 })
 
 

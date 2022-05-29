@@ -34,50 +34,55 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
     var password = document.getElementById("password").value;
 
     if (isUserLogged() == false) {
+        if (auth.length < 16) {
+            createUserWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Signed in 
+                    const user = userCredential.user;
+                    set(ref(database, 'users/' + user.uid), {
+                        name: name,
+                        email: email,
+                        uid: user.uid,
+                        lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
+                        creationTime: user.metadata.creationTime,
+                        hasCustomPP: false,
+                        permisionLevel: 0
+                    });
+                    document.cookie = "uid=" + user.uid; + ";";
+                    Push.PushUp(0, "Created Succifully");
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.log(errorMessage);
+                    console.log(errorCode);
 
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // Signed in 
-                const user = userCredential.user;
-                set(ref(database, 'users/' + user.uid), {
-                    name: name,
-                    email: email,
-                    uid: user.uid,
-                    lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
-                    creationTime: user.metadata.creationTime,
-                    hasCustomPP: false,
-                    permisionLevel: 0
+                    switch (errorCode) {
+                        case "auth/email-already-in-use":
+                            Push.PushUp(3, "Cette adress/pseudo est deja utilisé");
+                            break;
+                        case "auth/missing-email":
+                            Push.PushUp(2, "Veuillez ajouter une email");
+                            break;
+                        case "auth/invalid-email":
+                            Push.PushUp(2, "Veuillez specifiez une email valide");
+                            break;
+                        case "auth/internal-error":
+                            Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
+                            break;
+                        case "auth/weak-password":
+                            Push.PushUp(2, "Le mots de passe doit contenir au moin 6 charactères");
+                            break;
+                        default:
+                            Push.PushUp(3, errorCode);
+                            break;
+                    }
                 });
-                document.cookie = "uid=" + user.uid; + ";";
-                Push.PushUp(0, "Created Succifully");
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log(errorMessage);
-                console.log(errorCode);
+        } else {
+            Push.PushUp(2, "Votre pseudo doit être plus petit ! (16 charactères)", 5);
+        }
 
-                switch (errorCode) {
-                    case "auth/email-already-in-use":
-                        Push.PushUp(3, "Cette adress/pseudo est deja utilisé");
-                        break;
-                    case "auth/missing-email":
-                        Push.PushUp(2, "Veuillez ajouter une email");
-                        break;
-                    case "auth/invalid-email":
-                        Push.PushUp(2, "Veuillez specifiez une email valide");
-                        break;
-                    case "auth/internal-error":
-                        Push.PushUp(3, "Une erreur interne s'est produite (avez-vous renseigné un mots de passe ?)");
-                        break;
-                    case "auth/weak-password":
-                        Push.PushUp(2, "Le mots de passe doit contenir au moin 6 charactères");
-                        break;
-                    default:
-                        Push.PushUp(3, errorCode);
-                        break;
-                }
-            });
+
     } else {
         Push.PushUp(2, "Vous êtes déja authentifié");
     }
@@ -518,7 +523,76 @@ function Addtag(tagName) {
         })
 }
 //----------------------------------------------------------------
+//notif 
 
+function SetNotificationReaded(notificationId){
+    
+    getCurrentUser()
+    .then((user) => {
+       update(ref(database, 'users/' + user.uid + '/notifications/' + notificationId), {
+        hasReaded: true
+        } )
+        Umanager.setUserInfo();
+    })
+    
+}
+function getCurrentUserNotifications() {
+    return new Promise((resolve, reject) => {
+       getCurrentUser()
+        .then((user) => {
+            if(!user.notifications){
+                resolve(new Object());
+            }else {
+              resolve(user.notifications);  
+            }
+            
+        }) 
+        .catch((err) => reject(err));
+    })
+    
+}
+function hasNewNotifications(){
+    return new Promise((resolve, reject) => {
+      getCurrentUserNotifications()
+    .then((notificationsList) => {
+        var r = false;
+        var count = 0;
+        for (let i = 0; i < notificationsList.length; i++) {
+                if(!notificationsList[i].hasReaded)
+                {
+                    r=true;
+                    count++;
+                }
+        }
+        resolve({hasNonReadedNotifications:r,count:count});
+        })  
+    })
+    
+}
+
+function SendNotification(content, type) {
+
+    if (isUserLogged()) {
+        getCurrentUser()
+        .then((user) =>{
+            var l = 0;
+            if(user.hasOwnProperty("notifications")){
+                l = (Object.keys(user.notifications).length);
+            } 
+            const date = dateManager.getFullYear() + "." + dateManager.getMonth() + " Le " + dateManager.getDate() + " à " + dateManager.getHours() +"H";
+                console.log("new pos : "+ l);
+                set(ref(database, 'users/' + user.uid + '/notifications/' + l), {
+                content: content,
+                type: type,
+                date: date,
+                hasReaded: false
+                })
+        })
+        
+        
+    }
+}
+//----------------------------------------------------------------
 function readCookie(name) {
     var nameEQ = name + "=";
     var ca = document.cookie.split(';');
@@ -542,4 +616,4 @@ function eraseCookie(name) {
 
 
 
-export { Addtag, getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
+export { SetNotificationReaded,hasNewNotifications,getCurrentUserNotifications,SendNotification, Addtag, getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };

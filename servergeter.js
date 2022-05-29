@@ -1,26 +1,23 @@
-import "https://mcapi.us/scripts/minecraft.js";
-
 var loaded = false;
+var iframe = document.getElementById("servergeter");
+iframe.addEventListener("load", () => {
+    serverIsOn();
+})
 const serverStatueRound = document.getElementById("round");
 const serverStatueText = document.getElementById("server-statue-text");
 
 
 function serverIsOn() {
-    loaded = true
+    loaded = true;
     serverStatueRound.className = "online";
     serverStatueText.innerHTML = "Online";
 }
 
 setTimeout(() => {
     UpdateStatue();
-}, 5000);
+}, 500);
 
 function UpdateStatue() {
-
-
-    /* serverStatueRound.className = "error";
-     serverStatueText.innerHTML = "Error";
-
      switch (loaded) {
          case false:
              {
@@ -35,27 +32,8 @@ function UpdateStatue() {
                  break;
              }
 
-     }*/
-    MinecraftAPI.getServerStatus('http://node02.myhoster.fr', { port: 25567 /* optional, only if you need a custom port*/ },
-        function(err, status) {
-            console.log(status);
-            if (err) {
-                console.error(err);
-                serverStatueRound.className = "error";
-                serverStatueText.innerHTML = "Error";
+     }
 
-            } else {
-                if (status.online == false) {
-                    serverStatueRound.className = "offline";
-                    serverStatueText.innerHTML = "Offline";
-                }
-                // you can change these to your own message!
-                serverStatueText.innerHTML = "Online";
-                serverStatueRound.className = "online";
-            }
-
-
-        });
     update();
 }
 

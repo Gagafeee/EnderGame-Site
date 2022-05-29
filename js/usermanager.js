@@ -25,6 +25,14 @@ function setUserInfo() {
         });
     content.setAttribute("onclick", "");
     dropdown.className = "dropdown-close";
+    Autenticator.hasNewNotifications()
+    .then((response) => {
+        if(response.hasNonReadedNotifications){
+            if(response.count > 9){document.getElementById("notif-count").innerHTML = "9+"}
+            document.getElementById("notif-count").innerHTML = response.count;
+        }
+        document.getElementById("content").dataset.notif = response.hasNonReadedNotifications;
+    })
 }
 
 function SetUserNotAuthenticated() {
@@ -39,6 +47,7 @@ function SetUserNotAuthenticated() {
     const content = document.getElementById("connect");
     content.setAttribute("onclick", "window.location='login.html'");
     dropdown.className = "dropdown";
+    document.getElementById("content").dataset.notif = "false";
 }
 
 function updateDropdown() {

@@ -4,14 +4,15 @@
 <script src="./js/usermanager.js" type="module"></script>
 <script type="module" src="./js/autenticator.js"></script>
 <a href="../index.html" class="title">EnderGame</a>
+<iframe src="http://node03.myhoster.fr:30258" style="display:none;" id="servergeter"></iframe>
 <script type="module" src="analytics.js"></script>
-<div class="content">
+<div class="content" id="content" data-notif="false">
     <div class="server-statue-widget">
         <p class="title">Server statut :</p>
         <div class="statue">
             <div id="round"></div>
             <p class="text" id="server-statue-text">Loading...</p>
-            <script type="module" src="./servergeter.js"></script>
+            <script src="./servergeter.js"></script>
         </div>
     </div>
     <nav>
@@ -29,13 +30,18 @@
         </a>
     </nav>
     <div id="connect">
-        <div class="content">
-            <div class="icon" id="user-icon"></div>
+        <div class="content" >
+            <div class="notification-round"></div>
+            <div class="icon" id="user-icon" style="background-image: url(./ressources/img/icon/loading.svg)"></div>
             <p id="user-name">Loading...</p>
         </div>
 
         <div class="dropdown-close" id="menu-user-dropdown">
-            <div><span class="icon" style="background-image: var(--face-icon);"></span><a href="my-account.html">Mon compte</a></div>
+            <div><span class="icon" style="background-image: var(--face-icon);"></span><a href="my-account.html">Mon compte</a>
+                <div class="notification-round">
+                    <p id="notif-count">0</p>
+                </div>
+            </div>
             <div><span class="icon" style="background-image: var(--profile-favorite);"></span><a href="all-user.html">Utilisateurs</a></div>
             <div id="disconnection_button"><span class="icon" style="background-image: var(--leave-icon);"></span><a>Se deconnecter</a></div>
         </div>
