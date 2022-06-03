@@ -6,7 +6,7 @@
 <a href="../index.html" class="title">EnderGame</a>
 <iframe src="http://node03.myhoster.fr:30258" style="display:none;" id="servergeter"></iframe>
 <script type="module" src="analytics.js"></script>
-<div class="content" id="content" data-notif="false">
+<div class="content" id="Menucontent" data-notif="false">
     <div class="server-statue-widget">
         <p class="title">Server statut :</p>
         <div class="statue">
@@ -16,21 +16,37 @@
         </div>
     </div>
     <nav>
-        <a class="button" href="../index.html" id="selected-button">
+        <a class="button" data-btn="index" href="../index.html" id="selected-button">
             <p>Accueil</p>
         </a>
-        <a class="button" href="../blog.html">
+        <a class="button" data-btn="blog" href="./blog.html">
             <p>Blog</p>
         </a>
-        <a class="button" href="">
+        <a class="button" data-btn="" href="">
             <p>Button</p>
         </a>
-        <a class="button" href="">
+        <a class="button" data-btn="" href="">
             <p>Button</p>
         </a>
     </nav>
+    <script>
+        var x = location.href.split("/").slice(-1);
+        if(x[0] == "blog.html"){
+            var bt = document.getElementsByClassName("button");
+            for (let i = 0; i < bt.length; i++) {
+                console.log(bt[i].href);
+                if(bt[i].dataset.btn == "blog"){
+                    bt[i].id = "selected-button";
+                }else {
+                    bt[i].id = "";
+                }
+                
+            }
+        }
+
+    </script>
     <div id="connect">
-        <div class="content" >
+        <div class="content">
             <div class="notification-round"></div>
             <div class="icon" id="user-icon" style="background-image: url(./ressources/img/icon/loading.svg)"></div>
             <p id="user-name">Loading...</p>

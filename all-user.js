@@ -28,7 +28,6 @@ function SetUp() {
         Autenticator.getAllusers()
         .then((Users) => {
            const Content = document.getElementById("content");
-           console.log(Users);
             for (let i = 0; i < Users.length; i+=2) {
                 const HContent = document.createElement('div');
                 HContent.className = 'horizontal-content';
@@ -51,7 +50,7 @@ function SetUp() {
                         newUser.className = 'user-disabled';
                     }
     
-                    console.log("Get User: " +i + "["+u+"]" + " : " + (i+u) + "  " + Users[i+u].name );
+                    //console.log("Get User: " +i + "["+u+"]" + " : " + (i+u) + "  " + Users[i+u].name );
                     newName.innerHTML = Users[i+u].name;
                     newEmail.innerHTML = Users[i+u].email;
                     
@@ -80,7 +79,7 @@ function SetUp() {
                     
                 }
                 Content.appendChild(HContent);
-                console.log(i + " : " + (i+2) + "<" + (Users.length/2));
+                //console.log(i + " : " + (i+2) + "<" + (Users.length/2));
             }
             resolve();
         })

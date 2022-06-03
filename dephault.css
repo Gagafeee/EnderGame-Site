@@ -27,7 +27,7 @@
     --df-color: #656565;
     --df-bg-color: #65656590;
 
-    --admin-color: #71368A;
+    --admin-color: #7b26a0;
     --admin-bg-color: #71368A90;
 }
 
@@ -97,6 +97,9 @@ a {
     justify-content: center;
     align-items: center;
 }
+#loader-hide {
+    display: none;
+}
 
 .loader {
     border: 16px solid var(--background-color-second);
@@ -114,6 +117,12 @@ a {
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+}
+.horizontal-bar {
+    width: 80%;
+    height: 3px;
+    background-color: var(--text-color);
+    border-radius: 20px;
 }
 
 @keyframes spin {

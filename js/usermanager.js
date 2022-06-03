@@ -17,6 +17,8 @@ function setUserInfo() {
                     .then((url) => {
                         userIcon.style.backgroundImage = "url(" + url + ")";
                     })
+            }else{
+                userIcon.style.backgroundImage = "url(./ressources/img/icon/user.svg)";
             }
         })
         .catch((err) => {
@@ -31,7 +33,7 @@ function setUserInfo() {
             if(response.count > 9){document.getElementById("notif-count").innerHTML = "9+"}
             document.getElementById("notif-count").innerHTML = response.count;
         }
-        document.getElementById("content").dataset.notif = response.hasNonReadedNotifications;
+        document.getElementById("Menucontent").dataset.notif = response.hasNonReadedNotifications;
     })
 }
 
@@ -47,7 +49,7 @@ function SetUserNotAuthenticated() {
     const content = document.getElementById("connect");
     content.setAttribute("onclick", "window.location='login.html'");
     dropdown.className = "dropdown";
-    document.getElementById("content").dataset.notif = "false";
+    document.getElementById("Menucontent").dataset.notif = "false";
 }
 
 function updateDropdown() {

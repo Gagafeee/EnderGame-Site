@@ -27,6 +27,16 @@ const dateManager = new Date();
 import * as Umanager from "./usermanager.js";
 import * as Push from "../ressources/module/push/push-module.js";
 import * as ReAuth from "../ressources/module/reauth/reauth-module.js";
+
+export function GetDatabase() {
+    return database;
+}
+export function GetStorage() {
+    return storage;
+}
+export function GetApp() {
+    return app;
+}
 //---------------------------------------------------
 function CreateUserWithEmailAndPassword(auth, email, password) {
     var name = document.getElementById("pseudo").value;
@@ -295,9 +305,8 @@ function getLogin() {
                 if (DateIsValid(lastSignInDate)) {
                     Umanager.setUserInfo();
                 } else {
-                    Umanager.SetUserNotAuthenticated();
-                    eraseCookie("uid");
-                    console.warn("AutouserAuth cookie is not valide logout...");
+                    Disconnect();
+                    console.warn("AutoUserAuth cookie is not valide logout...");
                     Push.PushUp(2, "Your session has expired");
                 }
             })
@@ -355,7 +364,7 @@ function getCurrentUserId() {
 }
 
 function userIsDisabled(uid) {
-    const dbRef = ref(getDatabase());
+    /*const dbRef = ref(getDatabase());
     get(child(dbRef, `users/${uid}`)).then((snapshot) => {
         if (snapshot.exists()) {
             return snapshot.isDisabled;
@@ -368,7 +377,16 @@ function userIsDisabled(uid) {
         if (error == "Error: Client is offline.") {
             Push.PushUp(2, "Your connection is weak or slow")
         }
-    });
+    });*/
+
+    onValue(ref(database, 'users/' + uid), (snapshot) => {
+        if (snapshot.val().hasOwnProperty("isDisabled")) {
+            return snapshot.val().isDisabled;
+        } else {
+            console.log("No data available (returned false)");
+            return false;
+        }
+    })
 }
 
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>EnderGame | Blog</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="dephault.css">
+        <link rel="stylesheet" href="menu.css" type="text/css"></link>
+        <script src='js/jquery-3.6.0.min.js'></script>
+        <link rel="stylesheet" href="blog.css">
+        <script type="module" src="./js/blog.js"></script>
+    </head>
+    
+    <body class="theme-dark">
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <header id="menu">
+            <!--Nav-->
+            <script type="module">
+                $("#menu").load("menu.html");
+            </script>
+        </header>
+        <section id="loader-hide">
+            <div class="loader"></div>
+        </section>
+        <div id="page">
+            <section id="title">
+                <p>Blog</p>
+                <div class="horizontal-bar" style="width: 30%;"></div>
+            </section>
+            <section class="recomended">
+                <div class="cardScroller">
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                    <div class="card"></div>
+                </div>
+            </section>
+            <section class="all">
+                <div class="title">
+                    <p>Tout les articles</p>
+                    <div class="horizontal-bar"></div>
+                </div>
+                <div class="content" id="allArticle"></div>
+            </section>
+            <script type="module" src="./blogManager.js"></script>
+        </div>
+        <section class="return_panel" id="return_panel"></section>
+    <script>
+        $("#return_panel").load("../ressources/module/push/push-module.html")
+    </script>
+        
+    </body>
+</html>
