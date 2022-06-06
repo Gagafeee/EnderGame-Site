@@ -2,8 +2,8 @@
 .theme-dark {
     --background-color: #24282B;
     --background-color-transparent: #24282bc8;
-    --background-color-second: #2e3438;
-    --background-color-second-white: #495156;
+    --background-color-second: hsl(204, 10%, 20%);
+    --background-color-second-white: hsl(204, 10%, 25%);
     --background-color-third: #18191b;
     --background-color-white: #777777;
     --valid: #58b740;
@@ -26,7 +26,6 @@
 .tags-container {
     --df-color: #656565;
     --df-bg-color: #65656590;
-
     --admin-color: #7b26a0;
     --admin-bg-color: #71368A90;
 }
@@ -97,6 +96,7 @@ a {
     justify-content: center;
     align-items: center;
 }
+
 #loader-hide {
     display: none;
 }
@@ -118,6 +118,7 @@ a {
     background-repeat: no-repeat;
     background-size: contain;
 }
+
 .horizontal-bar {
     width: 80%;
     height: 3px;

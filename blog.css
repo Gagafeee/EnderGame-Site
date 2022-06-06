@@ -127,6 +127,7 @@
     height: 50vh;
     width: 20vw;
     margin: 1vh 2vw 1vh 2vw;
+    cursor: pointer;
 }
 
 #page .all .card:hover {

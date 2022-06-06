@@ -33,12 +33,18 @@ function getAllArticles(){
 
 function GetDownloadUrl(name){
     return new Promise((resolve, reject) => {
+        name = name.toLowerCase() + ".png";
         getDownloadURL(sRef(storage, 'blog/' + name))
         .then((url) => {
             resolve(url);
         })
         .catch((err) => {
-            reject(err);
+            if(err.code === "storage/object-not-found"){
+                resolve(null);
+            }else{
+               reject(err); 
+            }
+            
         })
     })
 }
@@ -71,8 +77,7 @@ function CreateArticle(name, categorie) {
 
 }
 
-//CreateCategorie("testCategorie")
-//CreateArticle("La release V95", "Actu");
+//CreateArticle("Dephault", "Actu");
 
 export {getAllArticles,GetDownloadUrl}
 

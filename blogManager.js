@@ -67,7 +67,11 @@ function SetUp() {
                 var g = ArticleList[u].Name;
                 Blog.GetDownloadUrl(ArticleList[u].Name)
                 .then((Url) => {
-                    Article.style.background = "url(" + Url + ")";
+                    console.log(Url);
+                    if(Url){
+                        Article.style.backgroundImage = "url(" + Url + ")";
+                    }
+                    
                 })
                 
                 Article.setAttribute("onClick","window.location = './blog/" + g + "'")
