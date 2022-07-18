@@ -56,7 +56,8 @@ function CreateUserWithEmailAndPassword(auth, email, password) {
                         lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
                         creationTime: user.metadata.creationTime,
                         hasCustomPP: false,
-                        permisionLevel: 0
+                        permisionLevel: 0,
+                        isLinked: false
                     });
                     document.cookie = "uid=" + user.uid; + ";";
                     Push.PushUp(0, "Created Succifully");
@@ -114,7 +115,8 @@ function CreateAccountWithPopup(auth, provider) {
                 lastSignInDate: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours(),
                 creationTime: user.metadata.creationTime,
                 hasCustomPP: false,
-                permisionLevel: 0
+                permisionLevel: 0,
+                isLinked: false
             });
             document.cookie = "uid=" + user.uid; + ";";
             Push.PushUp(0, "Created Succifully");
@@ -263,7 +265,6 @@ function SignInWithPopup(auth, provider) {
             //this is what you need
 
             var uinfo = getAdditionalUserInfo(result);
-            console.log(uinfo);
             var isNewUser = uinfo.isNewUser;
             if (isNewUser) {
                 result.user.delete();
@@ -289,8 +290,11 @@ function SignInWithPopup(auth, provider) {
             // The AuthCredential type that was used.
             const credential = GoogleAuthProvider.credentialFromError(error);
             // ...
-            console.error(error.message);
-            Push.PushUp(3, "Cannot login : " + error.message);
+            if(errorCode != "auth/popup-closed-by-user"){
+             console.error(error.code);
+            Push.PushUp(3, "Cannot login : " + error.message);   
+            }
+            
         });
 }
 
@@ -301,7 +305,6 @@ function getLogin() {
         getCurrentUser()
             .then((res) => {
                 var lastSignInDate = res.lastSignInDate;
-                console.log("isValid : " + DateIsValid(lastSignInDate));
                 if (DateIsValid(lastSignInDate)) {
                     Umanager.setUserInfo();
                 } else {
@@ -383,7 +386,7 @@ function userIsDisabled(uid) {
         if (snapshot.val().hasOwnProperty("isDisabled")) {
             return snapshot.val().isDisabled;
         } else {
-            console.log("No data available (returned false)");
+            //console.log("No data available (returned false)");
             return false;
         }
     })
@@ -598,7 +601,6 @@ function SendNotification(content, type) {
                 l = (Object.keys(user.notifications).length);
             } 
             const date = dateManager.getFullYear() + "." + dateManager.getMonth() + " Le " + dateManager.getDate() + " à " + dateManager.getHours() +"H";
-                console.log("new pos : "+ l);
                 set(ref(database, 'users/' + user.uid + '/notifications/' + l), {
                 content: content,
                 type: type,
@@ -610,6 +612,43 @@ function SendNotification(content, type) {
         
     }
 }
+//----------------------------------------------------------------
+function LinkMcAccount(mcUserName, notificationId){
+    getCurrentUser().then((user) => {
+        if(user.isLinked == false){
+            set(ref(database, 'users/' + user.uid +"/linked"), {
+                to: mcUserName,
+                date: dateManager.getFullYear() + "." + dateManager.getMonth() + "." + dateManager.getDate() + "." + dateManager.getHours()
+            })
+
+            update(ref(database, 'users/' + user.uid), {
+                isLinked: true
+            })
+            set(ref(database, 'users/' + user.uid + "/tags"), {
+                ["Minecraft (" + mcUserName + ")"]: true
+            })
+
+            update(ref(database, 'users/' + user.uid +"/notifications/" + notificationId), {
+                linked: true
+            })
+            get(child(ref(getDatabase()),'waiting/')).then((waitingData) => {
+                var n;
+                if(waitingData.exists()){n = "data-"+ Object.keys(waitingData.val()).length;}
+                else{n = "data-0"}
+              update(ref(database, 'waiting/'), {
+                [n] : user.uid + ":link"
+            })  
+            })
+            
+            
+        }else {
+            console.error("User has linked account already");
+            return false;
+        }
+    })
+}
+
+
 //----------------------------------------------------------------
 function readCookie(name) {
     var nameEQ = name + "=";
@@ -634,4 +673,4 @@ function eraseCookie(name) {
 
 
 
-export { SetNotificationReaded,hasNewNotifications,getCurrentUserNotifications,SendNotification, Addtag, getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };
+export { LinkMcAccount,SetNotificationReaded,hasNewNotifications,getCurrentUserNotifications,SendNotification, Addtag, getAllusers, ChangeCurrentUserName, reLogInWithGoogle, reLogIn, CreateAccount, getCurrentUserId, isUserLogged, LogIn, getCurrentUser, Disconnect, LogInWithGoogle, CreateAccountWithGoogle, SaveImage, GetUserProfilePicture, DeleteCurrentAccount };

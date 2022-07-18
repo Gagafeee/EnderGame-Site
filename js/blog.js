@@ -9,6 +9,8 @@ const database = Autenticator.GetDatabase();
 const storage = Autenticator.GetStorage();
 const Dmanager = new Date();
 
+
+
 function getAllArticles(){
     return new Promise((resolve, reject) => {
         /*get(ref(database, 'blog/'))

@@ -27,6 +27,7 @@ function Load() {
 }
 
 function UpdateInfos(User) {
+    
     Umanager.setUserInfo();
     const UserName = document.getElementById("userName");
     const UserPicture = document.getElementById("picture");
@@ -45,6 +46,9 @@ function UpdateInfos(User) {
     if (User.picture != null) {
         UserPicture.style.backgroundImage = User.picture;
     } else { /*Make it by depault*/ }
+    if(User.isLinked){
+        UserName.innerHTML = UserName.innerHTML + " (" + User.linked.to + ")";
+    }
     if (User.email != null) {
         IEmail.innerHTML = User.email;
     } else { IEmail.innerHTML = "Email Not found"; }
@@ -71,11 +75,7 @@ function UpdateInfos(User) {
 }
 
 function RefreshNotifications() {
-    //Autenticator.SendNotification("new notif",2)
-    Autenticator.hasNewNotifications()
-        .then((responce) => {
-            console.log(responce);
-        })
+
     document.getElementById("notifLoader").style.display = "block";
     Autenticator.getCurrentUserNotifications()
         .then((notificationsList) => {
@@ -103,6 +103,9 @@ function RefreshNotifications() {
                     case 2:
                         container.dataset.type = "info";
                         break;
+                    case 3:
+                        container.dataset.type = "link";
+                        break;
                 }
                 const Icon = document.createElement("div");
                     Icon.className = "icon";
@@ -120,10 +123,31 @@ function RefreshNotifications() {
                         Infos.appendChild(date);
                         Content.appendChild(Infos);
                 container.appendChild(Content);
-
+                if(notificationsList[i].type === 3 && notificationsList[i].hasReaded == false){
+                    const Button = document.createElement("div");
+                        if(notificationsList[i].hasReaded == false){
+                            Button.className = "link-button";
+                            Button.addEventListener("click", () =>{
+                                Button.style.backgroundImage = "url(../ressources/img/icon/loading.svg)";
+                                Autenticator.LinkMcAccount(notificationsList[i].mcuname, i)
+                                Autenticator.SetNotificationReaded(i);
+                                Button.style.backgroundImage = "url(../ressources/img/icon/done.svg)";
+                                Push.PushUp(1,"Votre compte EnderGame ("+username+") a été associé à votre compte Minecraft ("+notificationsList[i].mcuname+")");
+                                setTimeout(() =>{
+                                    window.location.reload();
+                                    Button.parentNode.removeChild(Button);
+                                },3500)
+                            })  
+                        }else if(notificationsList[i].hasReaded == true){
+                          Button.className = "disabled-button";  
+                        }
+                        
+                        
+                container.appendChild(Button);
+                }
                 const Button = document.createElement("div");
                         if(notificationsList[i].hasReaded == false){
-                            Button.className = "valid-button";
+                            Button.className = notificationsList[i].type === 3 ? "invalid-button" :"valid-button";
                             Button.addEventListener("click", () =>{
                                 Autenticator.SetNotificationReaded(i);
                                 setTimeout(() =>{
@@ -132,11 +156,12 @@ function RefreshNotifications() {
                                 
                             })  
                         }else if(notificationsList[i].hasReaded == true){
-                          Button.className = "disabled-button";  
+                          Button.className = notificationsList[i].linked == true ? "disabled-button" : "closed-button";  
                         }
                         
                         
                 container.appendChild(Button);
+                
                 C.appendChild(container);
             }
             Autenticator.hasNewNotifications()
@@ -252,6 +277,7 @@ function ChangeContent(id) {
     const NotifPanel = document.getElementById("notification");
     const ActionPanel = document.getElementById("actions");
     const StatPanel = document.getElementById("stats");
+    const MainContainer = document.getElementById("Account");
     switch (id) {
         case "user-infos":
             {
@@ -259,6 +285,7 @@ function ChangeContent(id) {
                 ActionPanel.style.display = "none";
                 StatPanel.style.display = "none";
                 NotifPanel.style.display = "none";
+                MainContainer.dataset.stats = "false";
                 break;
             }
         case "notif":
@@ -267,6 +294,7 @@ function ChangeContent(id) {
                 ActionPanel.style.display = "none";
                 StatPanel.style.display = "none";
                 NotifPanel.style.display = "flex";
+                MainContainer.dataset.stats = "false";
                 break;
             }
         case "action":
@@ -275,6 +303,7 @@ function ChangeContent(id) {
                 ActionPanel.style.display = "flex";
                 StatPanel.style.display = "none";
                 NotifPanel.style.display = "none";
+                MainContainer.dataset.stats = "false";
                 break;
             }
         case "stats":
@@ -283,6 +312,7 @@ function ChangeContent(id) {
                 ActionPanel.style.display = "none";
                 StatPanel.style.display = "flex";
                 NotifPanel.style.display = "none";
+                MainContainer.dataset.stats = "true";
                 break;
             }
     }

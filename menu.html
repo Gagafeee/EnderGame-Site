@@ -16,30 +16,35 @@
         </div>
     </div>
     <nav>
-        <a class="button" data-btn="index" href="../index.html">
+        <a class="button"href="../index.html">
             <p>Accueil</p>
         </a>
-        <a class="button" data-btn="blog" href="../blog.html">
+        <a class="button" href="../blog.html">
             <p>Blog</p>
         </a>
-        <a class="button" data-btn="" href="">
+        <a class="button" href="">
             <p>Button</p>
         </a>
-        <a class="button" data-btn="" href="">
+        <a class="button" href="">
             <p>Button</p>
         </a>
     </nav>
     <script>
         var x = location.href.split("/").slice(-1);
         if(x[0] == "blog.html" || x[0].indexOf("blog/") != null){
-            var bt = document.getElementsByClassName("button");
+            var bt = document.querySelector("nav").getElementsByClassName("button");
+            var f = false;
             for (let i = 0; i < bt.length; i++) {
-                console.log(bt[i].href);
-                if(bt[i].dataset.btn == "blog"){
-                    bt[i].id = "selected-button";
-                }else {
-                    bt[i].id = "";
+                if(!f){
+                 if(bt[i].href.substring(bt[i].href.lastIndexOf("/")+1) == window.location.pathname.split("/").pop()){
+                    bt[i].id = "selected-button"
+                    f = true;
+                 }   
                 }
+                console.log(bt[i])
+                console.log(window.location.pathname.split("/").pop())
+                console.log(bt[i].href.substring(bt[i].href.lastIndexOf("/")+1))
+                
                 
             }
         }

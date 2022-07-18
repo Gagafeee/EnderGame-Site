@@ -15,6 +15,7 @@
     --red: #c20f1e;
     --purple: #8d10d0;
     --blue: #1a31c9;
+    --cyan: #0d61d7;
     --discord: #5966F2;
     --face-icon: url(../ressources/img/icon/emoji.svg);
     --leave-icon: url(../ressources/img/icon/leave.svg);
@@ -28,6 +29,8 @@
     --df-bg-color: #65656590;
     --admin-color: #7b26a0;
     --admin-bg-color: #71368A90;
+    --Minecraft-color: #0bb53e;
+    --Minecraft-bg-color: #0da26490;
 }
 
 .tags-container .tag {

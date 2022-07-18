@@ -25,6 +25,12 @@
     height: 10vw;
     transition: all 0.5s;
 }
+#page #Account[data-stats = true] #profile-picture[class="normal"] {
+    margin-top: 2vh;
+    width: 8vw;
+    height: 8vw;
+    transition: all 0.5s;
+}
 
 #page #Account #profile-picture[class="normal"] #picture-tool {
     display: none;
@@ -261,11 +267,29 @@ input[type="file"] {
     align-items: center;
 }
 
+#page #Account[data-stats = true] .card {
+    margin-bottom: 1vh;
+    margin-top: -1vh;
+    display: flex;
+    width: 100%;
+    height: 10%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #page #Account .title {
     font-size: 2.2vw;
     font-weight: 700;
     margin: 0;
     margin-top: 5px;
+}
+#page #Account[data-stats = true] .title {
+    font-size: 2.2vw;
+    font-weight: 700;
+    margin: 0;
+    margin-left: 1vw;
+
 }
 
 
@@ -275,6 +299,17 @@ input[type="file"] {
     display: block;
     width: 95%;
     height: 57vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s;
+}
+
+#page #Account[data-ptoolopen="false"][data-stats = "true"] .infos-switcher {
+    display: block;
+    width: 95%;
+    height: 65vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -293,6 +328,7 @@ input[type="file"] {
     transition: all 0.5s;
 }
 
+
 #page #Account .infos-switcher .content {
     width: 100%;
     height: 90%;
@@ -301,9 +337,19 @@ input[type="file"] {
     overflow: hidden;
 }
 
+
+
 #page #Account .infos-switcher .nav {
     width: 100%;
     height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#page #Account[data-stats = true] .infos-switcher .nav {
+    width: 100%;
+    height: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -523,14 +569,14 @@ input[type="file"] {
     display: flex;
     align-items: center;
     margin: 0.5vh 0 0.5vh 0;
-
 }
+
 #page #Account .notif #notifLoader {
     position: fixed;
     top: 65%;
     left: 50%;
-
 }
+
 #page #Account .notif .notification .icon {
     width: 5%;
     margin-right: 2%;
@@ -556,6 +602,11 @@ input[type="file"] {
     border: 2px solid #f10606cf;
 }
 
+#page #Account .notif .notification[data-type="link"] {
+    background-color: #01dc4329;
+    border: 2px solid #06f187cf;
+}
+
 #page #Account .notif .notification[data-type="alert"] .icon {
     background-image: url(./ressources/img/icon/important.svg);
 }
@@ -568,7 +619,9 @@ input[type="file"] {
     background-image: url(./ressources/img/icon/close.svg);
 }
 
-
+#page #Account .notif .notification[data-type="link"] .icon {
+    background-image: url(./ressources/img/icon/link.svg);
+}
 
 #page #Account .notif .notification .container {
     width: 90%;
@@ -582,8 +635,9 @@ input[type="file"] {
     margin: 0;
     text-align: center;
     font-weight: 600;
-    font-size: 2vw ;
+    font-size: 2vw;
 }
+
 #page #Account .notif .notification .infos {
     width: 100%;
     height: 30%;
@@ -615,6 +669,37 @@ input[type="file"] {
     background-size: 3.5vw;
 }
 
+#page #Account .notif .notification .invalid-button {
+    height: 100%;
+    width: 10%;
+    background-color: var(--unvalid);
+    border-radius: 0 19px 19px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 3vw;
+    background-image: url(./ressources/img/icon/close.svg);
+    transition: all 0.5s;
+}
+
+#page #Account .notif .notification .invalid-button:hover {
+    background-size: 3.5vw;
+}
+
+#page #Account .notif .notification .link-button {
+    height: 100%;
+    width: 10%;
+    background-color: var(--cyan);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 3vw;
+    background-image: url(./ressources/img/icon/link.svg);
+    transition: all 0.5s;
+}
+
+#page #Account .notif .notification .link-button:hover {
+    background-size: 3.5vw;
+}
+
 #page #Account .notif .notification .disabled-button {
     height: 100%;
     width: 10%;
@@ -623,5 +708,16 @@ input[type="file"] {
     background-position: center;
     background-size: 2vw;
     background-image: url(./ressources/img/icon/done.svg);
+    transition: all 0.5s;
+}
+
+#page #Account .notif .notification .closed-button {
+    height: 100%;
+    width: 10%;
+    border-radius: 0 19px 19px 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2vw;
+    background-image: url(./ressources/img/icon/close.svg);
     transition: all 0.5s;
 }
